@@ -11,6 +11,7 @@ const Ingredient: React.FC<IngredientProps> = ({ ingredient }) => {
   const portions = usePortions();
 
   const getAmmountFromPortions = () => {
+    if(!ingredient.base_amount) return ''
     let ammount = ingredient.base_amount * portions.getPortions();
     if (ammount > 1000) return Math.round(ammount / 100) * 100;
     if (ammount > 500) return Math.round(ammount / 50) * 50;

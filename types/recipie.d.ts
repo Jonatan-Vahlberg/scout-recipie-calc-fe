@@ -2,7 +2,7 @@ type Category = "VEGETABLE" | "FRUIT" | "REFRIGERATED" | "SPICE" | "DRY_GOOD";
 
 type Ingredient = {
   name: string;
-  base_amount: number;
+  base_amount?: number;
   unit?: string;
   category?: Category;
 };
