@@ -31,8 +31,8 @@ const categoryStyles: {
   FRUIT: [GiOrangeSlice, "#ed9121"],
   VEGETABLE: [GiCarrot, "#059033"],
   REFRIGERATED: [GiMilkCarton, "#1865ba"],
-  SPICE: [GiSaltShaker, "#000"],
-  DRY_GOOD: [GiFlour, "#000"],
+  SPICE: [GiSaltShaker, "#8c4733"],
+  DRY_GOOD: [GiFlour, "#C74E5A"],
 };
 
 const CategoryIndicator: React.FC<{ category: Category }> = ({ category }) => {

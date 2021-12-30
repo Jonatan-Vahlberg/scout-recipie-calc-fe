@@ -2,7 +2,7 @@ type Category = "VEGETABLE" | "FRUIT" | "REFRIGERATED" | "SPICE" | "DRY_GOOD";
 
 type Ingredient = {
   name: string;
-  base_ammount: number;
+  base_amount: number;
   unit?: string;
   category?: Category;
 };
@@ -16,4 +16,6 @@ type Recipie = {
   id: string;
   ingredients: Ingredient[];
   steps?: RecipieStep[];
+  link?: string;
+  image_link?: string;
 };

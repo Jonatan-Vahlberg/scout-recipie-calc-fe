@@ -15,19 +15,19 @@ const RecipieProvider: React.FC = ({ children }) => {
     ingredients: [
       {
         name: "Potatis",
-        base_ammount: 200,
+        base_amount: 200,
         unit: "g",
         category: "VEGETABLE",
       },
       {
         name: "Köttbullar",
-        base_ammount: 225,
+        base_amount: 225,
         unit: "g",
         category: "REFRIGERATED",
       },
       {
         name: "Lingonsylt",
-        base_ammount: 50,
+        base_amount: 50,
         unit: "g",
       },
     ],

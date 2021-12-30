@@ -15,6 +15,28 @@ const ImageWrapper = styled.div`
   position: relative;
   width: 100%;
   margin-bottom: 16px;
+  display:flex;
+  overflow: hidden;
+  &: img{
+    width:100%;
+    object-fit: contain;
+  }
+`;
+
+const Anchor = styled.a`
+  color: ${({ theme }) => theme.colors.primary[200]};
+  font-size: 18px;
+  line-height: 21px;
+  &:link,
+  &:visited {
+    color: ${({ theme }) => theme.colors.primary[200]};
+    &:hover {
+      color: ${({ theme }) => theme.colors.primary[300]};
+    }
+  }
+  &:hover {
+    color: ${({ theme }) => theme.colors.primary[300]};
+  }
 `;
 
 const IngredientWrapper = styled.div`
@@ -29,14 +51,19 @@ const Recipie = () => {
   return (
     <Container>
       <Header>{recipie.name}</Header>
-      <ImageWrapper>
-        <Image
-          alt="Recipie image"
-          src="https://picsum.photos/1024"
-          layout="fill"
-          objectFit="contain"
-        />
-      </ImageWrapper>
+      {recipie.image_link && (
+        <ImageWrapper>
+          <img
+            alt="Recipie image"
+            src={recipie.image_link}
+          />
+        </ImageWrapper>
+      )}
+      {recipie.link && (
+        <Anchor href={recipie.link} target="_blank">
+          Orginal Recept
+        </Anchor>
+      )}
       <PortionSelector />
       <Card offColor>
         <SubHeader>Ingredienser</SubHeader>
