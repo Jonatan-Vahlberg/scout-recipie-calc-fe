@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { usePortions } from "../../utils/context/PortionContext";
 import Card from "../Card";
-import { SubHeader } from "../Styled/Text";
+import { SubHeader, Text } from "../Styled/Text";
 import PortionIncrementer from "./PortionIncrementer";
 
 const PortionIncrementerWrapper = styled.div`
@@ -21,7 +21,7 @@ const incrementers: [PortionKey, string][] = [
 
 const PortionSelector = () => {
   const portions = usePortions();
-  console.log(portions.portions["xs"]);
+
   return (
     <Card offColor className="mb-3">
       <SubHeader>Portioner</SubHeader>
@@ -35,6 +35,7 @@ const PortionSelector = () => {
           />
         ))}
       </PortionIncrementerWrapper>
+      <Text className="mb-0 mt-3"><strong>Totalt ≈ {Math.round(portions.getPortions())} portioner</strong></Text>
     </Card>
   );
 };

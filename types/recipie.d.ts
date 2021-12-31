@@ -18,4 +18,5 @@ type Recipie = {
   steps?: RecipieStep[];
   link?: string;
   image_link?: string;
+  description?: string;
 };

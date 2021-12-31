@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 const portionSizes = {
   xs: 0.7,
@@ -18,11 +18,11 @@ type PortionContextInterface = {
 };
 
 const defaultState: Portions = {
-  xs: 12,
+  xs: 0,
   sm: 0,
   md: 0,
   lg: 0,
-  xl: 8,
+  xl: 4,
 };
 
 const defaultContextState: PortionContextInterface = {
@@ -34,11 +34,30 @@ const defaultContextState: PortionContextInterface = {
   getPortions: () => 0,
 };
 
+const PORTIONS_STORAGE_KEY = "@STORAGE_PORTIONS"
+
 const PortionContext =
   React.createContext<PortionContextInterface>(defaultContextState);
 
 const PortionsProvider: React.FC = ({ children }) => {
+  const [checkedStorage, setCheckedStorage] = useState(false);
   const [portions, setPortions] = useState<Portions>(defaultState);
+
+  useEffect(() => {
+    if(!checkedStorage){
+      checkStorage()
+      return 
+    }
+    localStorage.setItem(PORTIONS_STORAGE_KEY,JSON.stringify(portions))
+  },[portions])
+
+  const checkStorage = () => {
+      const storedPortions = localStorage.getItem(PORTIONS_STORAGE_KEY)
+      if(storedPortions){
+        setPortions(JSON.parse(storedPortions))
+        setCheckedStorage(true)
+    }
+  }
 
   const alterPortionValue = (key: PortionKey, value: number) => {
     if (value >= 0) {

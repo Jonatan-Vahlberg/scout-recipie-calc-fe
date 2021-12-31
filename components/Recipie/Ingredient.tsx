@@ -10,21 +10,22 @@ type IngredientProps = {
 const Ingredient: React.FC<IngredientProps> = ({ ingredient }) => {
   const portions = usePortions();
 
-  const getAmmountFromPortions = () => {
+  const getamountFromPortions = () => {
     if(!ingredient.base_amount) return ''
-    let ammount = ingredient.base_amount * portions.getPortions();
-    if (ammount > 1000) return Math.round(ammount / 100) * 100;
-    if (ammount > 500) return Math.round(ammount / 50) * 50;
-    if (ammount > 50) return Math.round(ammount / 10) * 10;
-    return Math.round(ammount);
+    let amount = ingredient.base_amount * portions.getPortions();
+    if (amount > 1000) return Math.round(amount / 100) * 100;
+    if (amount > 500) return Math.round(amount / 50) * 50;
+    if (amount > 50) return Math.round(amount / 10) * 10;
+    if (amount < 10 && ingredient.category === "SPICE") return (Math.round(amount * 10) / 10).toFixed(1)
+    return Math.round(amount);
   };
 
-  const ingredientAmmount = ingredient.base_amount * portions.getPortions();
+  const ingredientamount = ingredient.base_amount * portions.getPortions();
   return (
     <Card className="d-flex justify-content-between align-items-center w-100">
       <Text className="mb-0">
         <strong>
-          {getAmmountFromPortions()} {ingredient.unit}
+          {getamountFromPortions()} {ingredient.unit}
         </strong>{" "}
         {ingredient.name}
       </Text>

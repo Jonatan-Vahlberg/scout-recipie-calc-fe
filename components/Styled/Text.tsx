@@ -12,7 +12,8 @@ export const Text = styled.p`
 export const Header = styled(Text)`
   color: ${({ theme }) => theme.colors.gray["900"]};
   font-weight: 900;
-  font-size: 38px;
+  font-size: 32px;
+  line-height: 38px;
   margin-bottom: 16px;
 `;
 
