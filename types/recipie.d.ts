@@ -20,3 +20,18 @@ type Recipie = {
   image_link?: string;
   description?: string;
 };
+
+
+type FormRecipie = {
+  name: string;
+  ingredients: Ingredient[];
+  link?: string;
+  image_link?: string;
+  description?: string;
+}
+
+
+type ListOptions = {
+  page: number;
+  search?: string;
+}

@@ -1,24 +1,32 @@
-import { ThemeProvider } from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import "bootstrap/dist/css/bootstrap.css";
 import "../styles/globals.css";
 import Theme from "../utils/theme";
 import { PortionsProvider } from "../utils/context/PortionContext";
 import { RecipieProvider } from "../utils/context/RecipieContext";
+import { ListProvider } from "../utils/context/ListContext";
 import NavHeader from "../components/Header";
+
+const Layout = styled.div`
+  min-height: 100vh;
+`
 
 function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider theme={Theme}>
+      <ListProvider>
+
       <RecipieProvider>
         <PortionsProvider>
-          <div>
+          <Layout className="h-100">
             <NavHeader />
-            <div className="container">
+            <div className="w-100 h-100 container">
               <Component {...pageProps} />
             </div>
-          </div>
+          </Layout>
         </PortionsProvider>
       </RecipieProvider>
+      </ListProvider>
     </ThemeProvider>
   );
 }

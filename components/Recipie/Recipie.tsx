@@ -87,6 +87,7 @@ const IngredientWrapper = styled.div`
 
 const Recipie = () => {
   const { recipie } = useRecipie();
+  if(!recipie) return null
   return (
     <Container withSteps={true}>
       <HeaderWrapper>

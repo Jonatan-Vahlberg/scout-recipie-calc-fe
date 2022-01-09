@@ -10,30 +10,7 @@ const RecipieContext = React.createContext<Partial<PortionContextInterface>>(
 );
 
 const RecipieProvider: React.FC = ({ children }) => {
-  const [recipie, setRecipie] = useState<Recipie>({
-    name: "Köttbullar och potatis",
-    ingredients: [
-      {
-        name: "Potatis",
-        base_amount: 200,
-        unit: "g",
-        category: "VEGETABLE",
-      },
-      {
-        name: "Köttbullar",
-        base_amount: 225,
-        unit: "g",
-        category: "REFRIGERATED",
-      },
-      {
-        name: "Lingonsylt",
-        base_amount: 50,
-        unit: "g",
-      },
-    ],
-    steps: [],
-    id: "4",
-  });
+  const [recipie, setRecipie] = useState<Recipie>();
 
   return (
     <RecipieContext.Provider

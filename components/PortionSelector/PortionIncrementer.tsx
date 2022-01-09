@@ -1,6 +1,7 @@
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import styled from "styled-components";
 import { usePortions } from "../../utils/context/PortionContext";
+import { ButtonStyle } from "../Styled/Button";
 
 const IncrementerWrapper = styled.div`
   display: flex;
@@ -8,24 +9,13 @@ const IncrementerWrapper = styled.div`
   gap: 16px;
 `;
 
-const Button = styled.button`
-  border: none;
+export const Button = styled.button<{noShadow?: boolean}>`
   width: 28px;
   height: 28px;
   border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  -webkit-box-shadow: -2px 2px 7px 1px rgba(0, 0, 0, 0.25);
-  box-shadow: -2px 2px 7px 1px rgba(0, 0, 0, 0.25);
-
-  background-color: ${({ theme }) => theme.colors.primary[200]};
-  color: ${({ theme }) => theme.colors.white};
-  transition: all 0.3s;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.primary[300]};
-  }
+  -webkit-box-shadow: ${({noShadow}) => noShadow ? "" : " -2px 2px 7px 1px rgba(0, 0, 0, 0.25)"};
+  box-shadow: ${({noShadow}) => noShadow ? "" : " -2px 2px 7px 1px rgba(0, 0, 0, 0.25)"};
+  ${ButtonStyle};
 `;
 
 const Span = styled.span`
