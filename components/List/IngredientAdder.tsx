@@ -2,8 +2,6 @@ import React from "react";
 import { FaPlus } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 import styled from "styled-components";
-
-import { ButtonStyle } from "../Styled/Button";
 import { FormButton, Label, StyledInput } from "../Styled/Form";
 
 type IngredientsAdderProps = {
@@ -71,7 +69,7 @@ const IngredientAdder: React.FC<IngredientsAdderProps> = ({
     <div>
       <Label>Ingredienser</Label>
       {ingredients.map((ingredient, index) => (
-        <IngredientWrapper key={`INGREDIENT_${ingredient.name}${Math.random()}`}>
+        <IngredientWrapper key={`INGREDIENT_ADD${ingredient.name}`}>
           <StyledInput
             placeholder="#"
             value={ingredient.base_amount}
@@ -92,7 +90,7 @@ const IngredientAdder: React.FC<IngredientsAdderProps> = ({
             as="select"
           >
             {ingredientsCategories.map(category => (
-              <option key={`OPTION${category.name}${Math.random()}`}  value={category.category}>
+              <option key={`OPTION${category.name}${ingredient.name}`}  value={category.category}>
                 {category.name}
               </option>
             ))}

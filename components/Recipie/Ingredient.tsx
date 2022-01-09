@@ -12,7 +12,7 @@ const Ingredient: React.FC<IngredientProps> = ({ ingredient }) => {
 
   const getamountFromPortions = () => {
     if(!ingredient.base_amount) return ''
-    let amount = ingredient.base_amount * portions.getPortions();
+    let amount = (ingredient.base_amount/4) * portions.getPortions();
     if (amount > 1000) return Math.round(amount / 100) * 100;
     if (amount > 500) return Math.round(amount / 50) * 50;
     if (amount > 50) return Math.round(amount / 10) * 10;

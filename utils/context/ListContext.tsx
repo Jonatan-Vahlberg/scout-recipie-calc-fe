@@ -62,7 +62,7 @@ const ListProvider: React.FC = ({ children }) => {
       .then((response) => {
         getRecipies();
         onCreation();
-        // router.push(`/${response.data.id}/`);
+        router.push(`/${response.data.id}/`);
       })
       .catch((error) => {
         console.warn("ERROR: could not create recipie", error);

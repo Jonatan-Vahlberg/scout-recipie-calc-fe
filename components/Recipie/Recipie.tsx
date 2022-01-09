@@ -123,7 +123,7 @@ const Recipie = () => {
           <SubHeader>Steg</SubHeader>
           <IngredientWrapper>
             {recipie.steps?.map((step, index) => (
-              <Step key={`STEP${step.description}`} step={'step'} index={index + 1} />
+              <Step key={`STEP_DETAIL_${step.description}`} step={'step'} index={index + 1} />
             ))}
           </IngredientWrapper>
         </Card>
