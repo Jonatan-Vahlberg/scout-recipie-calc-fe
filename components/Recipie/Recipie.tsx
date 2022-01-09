@@ -118,16 +118,12 @@ const Recipie = () => {
           ))}
         </IngredientWrapper>
       </Card>
-      {!recipie.steps && (
+      {recipie.steps && (
         <Card offColor style={{ gridArea: "steps" }}>
           <SubHeader>Steg</SubHeader>
           <IngredientWrapper>
-            {[
-              "Step 1 r en mild och snabblagad palak paneer med smakrik halloumi i en krämig grädd- och spenatsås kryddad med garam masala, vitlök, ingefär",
-              "Step 2 ??? ",
-              "step 3 profit",
-            ].map((step, index) => (
-              <Step step={step} index={index + 1} />
+            {recipie.steps?.map((step, index) => (
+              <Step key={`STEP${step.description}`} step={'step'} index={index + 1} />
             ))}
           </IngredientWrapper>
         </Card>

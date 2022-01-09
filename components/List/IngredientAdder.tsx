@@ -71,7 +71,7 @@ const IngredientAdder: React.FC<IngredientsAdderProps> = ({
     <div>
       <Label>Ingredienser</Label>
       {ingredients.map((ingredient, index) => (
-        <IngredientWrapper>
+        <IngredientWrapper key={`INGREDIENT_${ingredient.name}${Math.random()}`}>
           <StyledInput
             placeholder="#"
             value={ingredient.base_amount}
@@ -92,7 +92,7 @@ const IngredientAdder: React.FC<IngredientsAdderProps> = ({
             as="select"
           >
             {ingredientsCategories.map(category => (
-              <option value={category.category}>
+              <option key={`OPTION${category.name}${Math.random()}`}  value={category.category}>
                 {category.name}
               </option>
             ))}

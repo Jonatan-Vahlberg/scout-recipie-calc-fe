@@ -40,7 +40,7 @@ const ListView = ({}) => {
       <p>Search</p>
       <List>
         {recipieList.recipies.results.map((recipie) => (
-         <ListItem recipie={recipie}/>
+         <ListItem key={`LIST_ITEM${recipie.name}${Math.random()}`} recipie={recipie}/>
         ))}
       </List>
       <Divider></Divider>
