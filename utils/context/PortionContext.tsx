@@ -55,8 +55,8 @@ const PortionsProvider: React.FC = ({ children }) => {
       const storedPortions = localStorage.getItem(PORTIONS_STORAGE_KEY)
       if(storedPortions){
         setPortions(JSON.parse(storedPortions))
-        setCheckedStorage(true)
-    }
+      }
+      setCheckedStorage(true)
   }
 
   const alterPortionValue = (key: PortionKey, value: number) => {

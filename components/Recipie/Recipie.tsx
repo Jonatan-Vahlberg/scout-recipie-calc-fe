@@ -4,6 +4,7 @@ import { useRecipie } from "../../utils/context/RecipieContext";
 import Card from "../Card";
 import PortionSelector from "../PortionSelector/PortionSelector";
 import { Header, SubHeader, Text } from "../Styled/Text";
+import AddToCartButton from "./AddToCart";
 import Ingredient from "./Ingredient";
 import Step from "./Step";
 
@@ -17,6 +18,10 @@ const HeaderWrapper = styled.div`
   grid-area: header;
   background-color: ${({ theme }) => theme.colors.white};
   padding: 16px 16px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
 `;
 
 const Container = styled.div<{ withSteps: boolean }>`
@@ -92,6 +97,7 @@ const Recipie = () => {
     <Container withSteps={true}>
       <HeaderWrapper>
         <Header className="mb-0">{recipie.name}</Header>
+        <AddToCartButton recipie={recipie}/>
       </HeaderWrapper>
       <ImageWrapper>
         {recipie.image_link && (

@@ -43,3 +43,7 @@ export const ButtonStyle = css`
   transition: all 0.3s;
   ${ColorPrimary}
 `;
+
+export const Button = styled.button`
+  ${ButtonStyle}
+`

@@ -5,6 +5,7 @@ type Ingredient = {
   base_amount?: number;
   unit?: string;
   category?: Category;
+  id: string;
 };
 
 type RecipieStep = {

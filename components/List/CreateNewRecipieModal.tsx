@@ -55,8 +55,6 @@ const CreateNewRecipieModal: React.FC<ModalProps> = ({ isOpen, toggle }) => {
       }
     );
   };
-
-  console.log(isAllIngredientsValid());
   return (
     <Modal isOpen={isOpen} toggle={onToggle} centered backdrop="static">
       <Card>
