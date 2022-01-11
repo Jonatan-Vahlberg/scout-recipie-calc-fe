@@ -18,6 +18,11 @@ const Indicator = styled.div`
   justify-content: center;
   background-color: ${({ color }) => color};
   color: white;
+
+  & svg {
+    width: 20px;
+    height: 20px;
+  }
 `;
 type CategoryInfo = [IconType, string];
 

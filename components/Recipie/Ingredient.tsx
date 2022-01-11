@@ -5,6 +5,7 @@ import CategoryIndicator from "./CategoryIndicator";
 
 type IngredientProps = {
   ingredient: Ingredient;
+  customPortions?: number;
 };
 
 const Ingredient: React.FC<IngredientProps> = ({ ingredient }) => {
