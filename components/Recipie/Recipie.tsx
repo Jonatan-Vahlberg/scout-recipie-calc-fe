@@ -1,5 +1,6 @@
 import Image from "next/image";
 import styled from "styled-components";
+import { usePortions } from "../../utils/context/PortionContext";
 import { useRecipie } from "../../utils/context/RecipieContext";
 import Card from "../Card";
 import PortionSelector from "../PortionSelector/PortionSelector";
@@ -92,6 +93,7 @@ const IngredientWrapper = styled.div`
 
 const Recipie = () => {
   const { recipie } = useRecipie();
+  const portions = usePortions()
   if(!recipie) return null
   return (
     <Container withSteps={true}>
@@ -120,6 +122,7 @@ const Recipie = () => {
             <Ingredient
               key={`INGREDIENT_${ingredient.name}`}
               ingredient={ingredient}
+              portions={portions.getPortions()}
             />
           ))}
         </IngredientWrapper>

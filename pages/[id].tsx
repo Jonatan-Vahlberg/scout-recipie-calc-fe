@@ -9,7 +9,7 @@ const DetailPage: NextPage = () => {
   const router = useRouter();
   const recipieContext = useRecipie();
   useEffect(() => {
-    console.log(router);
+    
     if (router.query.id) {
       const id = Number(router.query.id.toString());
       apiKit

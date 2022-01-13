@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from "react"
-import Ingredient from "../../components/Recipie/Ingredient"
 
 
 // type ContextState = {
@@ -18,6 +17,7 @@ type ContextInterface = {
   generateAlias: () => string;
   editCartItem: (item: CartItem) => void;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  groupByRecipie: () =>  CartItem[][];
 }
 
 const CartContext = createContext<Partial<ContextInterface>>({})
@@ -51,15 +51,19 @@ const CartProvider: React.FC = ({children}) => {
 
   }
 
-  // const _getIngredients = () => {
-  //   const allIngredients = cart.map(item => item.recipie.ingredients).flat(1);
-  //   let filteredIngredients = allIngredients.filter((ingredient,index,self) =>(
-  //     index === self.findIndex(i => {
-  //       i.id === ingredient.id
-  //     })
-  //   ))
-  //   return filteredIngredients
-  // }
+  const groupByRecipie = () => {
+    let recipieSplitCart: {
+      [key: number]: CartItem[]
+    } = cart.reduce((result, item) => ({
+      ...result,
+      [item.recipie.id]: [
+        ...(result[item.recipie.id] || []),
+        item
+      ]
+    }),{})
+    let splitCart: CartItem[][] = Object.keys(recipieSplitCart).map(key => recipieSplitCart[key])
+    return splitCart
+  }
  
   const addToCart = (item: CartItem) => {
     setCart(state => [...state, item])
@@ -86,7 +90,8 @@ const CartProvider: React.FC = ({children}) => {
       setIsOpen,
       addToCart,
       removeFromCart,
-      generateAlias
+      generateAlias,
+      groupByRecipie
     }}>
       {children}
     </CartContext.Provider>

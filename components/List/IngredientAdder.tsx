@@ -1,5 +1,4 @@
 import React from "react";
-import { FaPlus } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 import styled from "styled-components";
 import { FormButton, Label, StyledInput } from "../Styled/Form";

@@ -14,7 +14,7 @@ type PortionContextInterface = {
   incrementPortion: (key: PortionKey) => void;
   decrementPortion: (key: PortionKey) => void;
   resetPortions: () => void;
-  getPortions: () => number;
+  getPortions: (_portions?: Portions) => number;
 };
 
 const defaultState: Portions = {
@@ -82,10 +82,12 @@ const PortionsProvider: React.FC = ({ children }) => {
     setPortions(defaultState);
   };
 
-  const getPortions = () => {
-    const keys = Object.keys(portions);
+  const getPortions = (_portions?: Portions) => {
+    _portions = _portions || portions
+    const keys = Object.keys(_portions);
+    
     return keys
-      .map((key) => portions[key] * portionSizes[key])
+      .map((key) => _portions[key] * portionSizes[key])
       .reduce((sum, a) => sum + a);
   };
 
