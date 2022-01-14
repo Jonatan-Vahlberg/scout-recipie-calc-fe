@@ -27,7 +27,7 @@ const RecipieItem: React.FC<{ item: CartItem }> = ({ item }) => {
     <RecipieCard>
       <Text className="mb-0">
         <strong>
-          {item.recipie.name} x{getPortions(item.portions)}
+          {item.recipie.name} x{Math.round(getPortions(item.portions))}
         </strong>
       </Text>{" "}
       <DeletionIcon onClick={() => removeFromCart(item)} className="fa fa-trash-alt"></DeletionIcon>

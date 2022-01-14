@@ -40,10 +40,14 @@ export const ButtonStyle = css`
   align-items: center;
   justify-content: center;
   border: none;
+  font-size: 16px;
+  line-height: 19px;
+  padding: 4px 8px;
   transition: all 0.3s;
   ${ColorPrimary}
 `;
 
-export const Button = styled.button`
+export const Button = styled.button<{gray?: boolean}>`
   ${ButtonStyle}
+  ${({gray}) => gray ? ColorGray : ""}
 `

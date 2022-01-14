@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-
+import {_getPortions} from '../helpers'
 const portionSizes = {
   xs: 0.7,
   sm: 0.8,
@@ -84,11 +84,7 @@ const PortionsProvider: React.FC = ({ children }) => {
 
   const getPortions = (_portions?: Portions) => {
     _portions = _portions || portions
-    const keys = Object.keys(_portions);
-    
-    return keys
-      .map((key) => _portions[key] * portionSizes[key])
-      .reduce((sum, a) => sum + a);
+    return _getPortions (_portions);
   };
 
   return (

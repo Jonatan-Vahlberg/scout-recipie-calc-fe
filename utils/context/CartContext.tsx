@@ -1,4 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react"
+import CartItem from "../../components/Cart/CartItem"
+import { getIngredientPortioned, _getPortions } from "../helpers"
+import { usePortions } from "./PortionContext"
 
 
 // type ContextState = {
@@ -18,6 +21,7 @@ type ContextInterface = {
   editCartItem: (item: CartItem) => void;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   groupByRecipie: () =>  CartItem[][];
+  copyCart: () => void;
 }
 
 const CartContext = createContext<Partial<ContextInterface>>({})
@@ -25,6 +29,7 @@ const CartContext = createContext<Partial<ContextInterface>>({})
 const STORAGE_CART_KEY = "@STORAGE_CART"
 
 const CartProvider: React.FC = ({children}) => {
+
   const [checkedStorage, setCheckedStorage] = useState(false);
 
   const [cart, setCart] = useState<CartItem[]>([])
@@ -49,6 +54,18 @@ const CartProvider: React.FC = ({children}) => {
     }
     setCheckedStorage(true)
 
+  }
+
+  const _stringifyIngredient = (ingredient:Ingredient, portions:number) => {
+    return `\t${getIngredientPortioned(ingredient, portions)} ${ingredient.unit || ""} ${ingredient.name}\n`
+  }
+
+  const _stringifyRecipie = (item: CartItem) => {
+    const {recipie, portions} = item
+    const portionSize = _getPortions(portions)
+    let strigified = `${recipie.name}\n${recipie.ingredients.map((ingredient) => _stringifyIngredient(ingredient, portionSize)).join("")}
+    `
+    return strigified
   }
 
   const groupByRecipie = () => {
@@ -83,6 +100,13 @@ const CartProvider: React.FC = ({children}) => {
     })
   }
 
+  const copyCart = () => {
+    const copyPasta = cart.map(item => _stringifyRecipie(item)).join("\n")
+    if(navigator){
+      navigator.clipboard.writeText(copyPasta)
+    }
+  }
+
   return (
     <CartContext.Provider value={{
       cart,
@@ -91,7 +115,8 @@ const CartProvider: React.FC = ({children}) => {
       addToCart,
       removeFromCart,
       generateAlias,
-      groupByRecipie
+      groupByRecipie,
+      copyCart
     }}>
       {children}
     </CartContext.Provider>

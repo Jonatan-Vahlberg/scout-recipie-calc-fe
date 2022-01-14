@@ -36,7 +36,7 @@ const ListedCartItem: React.FC<{ items: CartItem[] }> = ({ items }) => {
   console.log(`Portions: ${totalPortions}`)
   return (
     <Card offColor>
-      <DropdownWrapper title={`${item.recipie.name} x${totalPortions}`} defaultState={true}>
+      <DropdownWrapper title={`${item.recipie.name} x${Math.round(totalPortions)}`} defaultState={true}>
         <IngredientWrapper>
 
         {item.recipie.ingredients.map((ingredient) => (

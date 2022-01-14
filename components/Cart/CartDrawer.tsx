@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import { useCart } from "../../utils/context/CartContext";
 import Card from "../Card";
 import DropdownWrapper from "../Dropdown/DropdownWrapper";
+import { Button } from "../Styled/Button";
 import { Divider } from "../Styled/Divider";
 import { Header, Text } from "../Styled/Text";
 import ListedCartItem from "./CartItem";
@@ -19,6 +20,9 @@ const Backdrop = styled.div<{ isOpen: boolean }>`
 
 const InertPosition = css`
   right: min(-75vw, -500px);
+  @media (max-width: 768px) {
+    right: -100vw;
+  }
 `;
 
 const OpenPosition = css`
@@ -34,12 +38,23 @@ const Drawer = styled(Card)<{ isOpen: boolean }>`
   cursor: initial;
   text-align: left;
   overflow-y: auto;
+
+  @media (max-width: 768px) {
+    width: 100vw;
+  }
 `;
 
 const RecipieList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+`;
+
+const CloseIcon = styled.i.attrs({ className: "fa fa-times" })`
+  color: ${({ theme }) => theme.colors.primary[600]};
+  position: absolute;
+  right: 16px;
+  top: 25px;
 `;
 
 const CartDrawer = () => {
@@ -77,18 +92,22 @@ const CartDrawer = () => {
         }}
         isOpen={isDrawerOpen}
       >
-        <Header>Kundvangn</Header>
+        <Header>Kundvagn</Header>
+        <CloseIcon onClick={() => cart.setIsOpen(false)} />
         <Divider />
         <Text>Total mängd recept: {cart.cart.length}</Text>
+        <Button onClick={() => cart.copyCart()}>
+          Kopiera kundvagn&nbsp;&nbsp;<i className="mr-2 fa fa-copy"></i>
+        </Button>
         <Divider />
         <Card offColor>
-            <DropdownWrapper title="Recept" defaultState={false}>
-          <RecipieList>
+          <DropdownWrapper title="Recept" defaultState={false}>
+            <RecipieList>
               {cart.cart.map((item) => (
                 <RecipieItem item={item} />
               ))}
-          </RecipieList>
-            </DropdownWrapper>
+            </RecipieList>
+          </DropdownWrapper>
         </Card>
         <Divider />
 
