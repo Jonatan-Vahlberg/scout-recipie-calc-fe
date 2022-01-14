@@ -68,7 +68,7 @@ const IngredientAdder: React.FC<IngredientsAdderProps> = ({
     <div>
       <Label>Ingredienser</Label>
       {ingredients.map((ingredient, index) => (
-        <IngredientWrapper key={`INGREDIENT_ADD${ingredient.name}`}>
+        <IngredientWrapper key={`INGREDIENT_ADD${index}`}>
           <StyledInput
             placeholder="#"
             value={ingredient.base_amount}
