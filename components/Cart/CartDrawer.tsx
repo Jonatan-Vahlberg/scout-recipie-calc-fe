@@ -104,7 +104,7 @@ const CartDrawer = () => {
           <DropdownWrapper title="Recept" defaultState={false}>
             <RecipieList>
               {cart.cart.map((item) => (
-                <RecipieItem item={item} />
+                <RecipieItem key={`CART_RECIPIE_I${item.alias}`} item={item} />
               ))}
             </RecipieList>
           </DropdownWrapper>
@@ -113,7 +113,7 @@ const CartDrawer = () => {
 
         <RecipieList>
           {cart.groupByRecipie().map((items) => (
-            <ListedCartItem items={items} />
+            <ListedCartItem key={`CART_ITEM_I${items?.[0].alias}`} items={items} />
           ))}
         </RecipieList>
       </Drawer>
