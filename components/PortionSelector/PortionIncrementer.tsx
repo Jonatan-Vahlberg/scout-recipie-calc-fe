@@ -18,8 +18,8 @@ export const Button = styled.button<{noShadow?: boolean}>`
   ${ButtonStyle};
 `;
 
-const Span = styled.span`
-  min-width: 90px;
+const Span = styled.span<{advanced?: boolean}>`
+  min-width: ${({advanced}) => advanced ? "110px" : "100px"};
   font-weight: 600;
 `;
 
@@ -31,21 +31,23 @@ const Input = styled.input`
 type PortionsIncrementerInterface = {
   portionKey: PortionKey;
   name: string;
+  advanced?: boolean;
 };
 
 const PortionIncrementer: React.FC<PortionsIncrementerInterface> = ({
   portionKey,
   name,
+  advanced,
 }) => {
   const { portions, incrementPortion, decrementPortion, alterPortionValue } =
     usePortions();
-
+  
   return (
     <IncrementerWrapper>
       <Button onClick={() => decrementPortion(portionKey)}>
         <AiOutlineMinus />
       </Button>
-      <Span>{name}</Span>
+      <Span advanced={advanced}>{name}</Span>
       <Input
         type="number"
         value={portions[portionKey]}

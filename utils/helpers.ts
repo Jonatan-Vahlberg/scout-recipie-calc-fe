@@ -1,9 +1,27 @@
+export const reasons: Reason[] = [
+  "VEGITARIAN",
+  "VEGAN",
+  "DAIRY",
+  "MP_ALLERGIES",
+  "GLUTEN",
+  "LEGUMINOUS",
+];
+
+export const translatedReasons = {
+  VEGITARIAN: "Veg",
+  VEGAN: "Vegan",
+  DAIRY: "Laktos",
+  MP_ALLERGIES: "Mjölkprotein",
+  GLUTEN: "Gluten",
+  LEGUMINOUS: "Balj",
+};
+
 export const getIngredientPortioned = (
   ingredient: Ingredient,
   portions: number
 ) => {
-  if (!ingredient.base_amount) return "";
-  let amount = ingredient.base_amount / 4;
+  if (!ingredient.amount) return "";
+  let amount = ingredient.amount / 4;
   amount = amount * portions;
   if (ingredient.unit === "st") return Math.ceil(amount);
   if (amount > 1000) return Math.round(amount / 100) * 100;
@@ -14,7 +32,7 @@ export const getIngredientPortioned = (
   return amount;
 };
 
-const portionSizes = {
+const baseSizes = {
   xs: 0.7,
   sm: 0.8,
   md: 0.9,
@@ -22,10 +40,32 @@ const portionSizes = {
   xl: 1,
 };
 
+const advancedSizes = {
+  VEGITARIAN: 1,
+  GLUTEN: 1,
+  VEGAN: 1,
+  LEGUMINOUS: 1,
+  DAIRY: 1,
+  MP_ALLERGIES: 1,
+};
+
+const portionSizes = {
+  ...baseSizes,
+  ...advancedSizes,
+};
+
 export const _getPortions = (_portions: Portions) => {
   const keys = Object.keys(_portions);
 
+  const collectedPortions = keys
+    .map((key) => _portions[key] * portionSizes[key])
+    .reduce((sum, a) => sum + a);
   return keys
     .map((key) => _portions[key] * portionSizes[key])
     .reduce((sum, a) => sum + a);
+};
+
+export const anyAdvancedSelected = (_portions: Portions) => {
+  const advancedKeys = Object.keys(advancedSizes);
+  return advancedKeys.some((key) => _portions[key] > 0);
 };

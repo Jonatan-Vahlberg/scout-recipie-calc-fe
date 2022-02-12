@@ -7,6 +7,7 @@ type RecipieList = {
   next?: string;
   previous?: string;
   results: Recipie[];
+  loading: boolean;
 };
 
 const defaultList: RecipieList = {
@@ -14,13 +15,14 @@ const defaultList: RecipieList = {
   results: [],
   next: null,
   previous: null,
+  loading: false,
 };
 
 type PortionContextInterface = {
   recipies: RecipieList;
   setRecipies: (recipies?: RecipieList) => void;
   options: ListOptions;
-  setOptions: (options: ListOptions) => void;
+  setOptions: React.Dispatch<React.SetStateAction<ListOptions>>;
   createRecipie: (
     recipie: FormRecipie,
     onCreation: VoidFunction,
@@ -40,13 +42,19 @@ const ListProvider: React.FC = ({ children }) => {
     onSuccess: VoidFunction = () => {},
     onError: VoidFunction = () => {}
   ) => {
+    setRecipies({ ...recipies, loading: true });
     apiKit
       .getRecipies(options)
       .then((response) => {
-        setRecipies(response.data);
+        setRecipies({
+          ...response.data,
+          loading: false,
+        });
         onSuccess();
       })
       .catch((error) => {
+        setRecipies({ ...recipies, loading: true });
+
         console.warn("ERROR: could not get recipies", error);
         onError();
       });

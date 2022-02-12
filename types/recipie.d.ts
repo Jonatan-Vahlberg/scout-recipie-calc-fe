@@ -1,11 +1,26 @@
 type Category = "VEGETABLE" | "FRUIT" | "REFRIGERATED" | "SPICE" | "DRY_GOOD";
 
-type Ingredient = {
+type Reason =
+  | "VEGITARIAN"
+  | "VEGAN"
+  | "DAIRY"
+  | "MP_ALLERGIES"
+  | "GLUTEN"
+  | "LEGUMINOUS";
+
+type BaseIngredient = {
   name: string;
-  base_amount?: number;
   unit?: string;
   category?: Category;
   id: string;
+};
+
+type Ingredient = BaseIngredient & {
+  ingredient_id?: string;
+  amount?: number;
+  id: string;
+  replaces?: string;
+  replaces_reason?: Reason;
 };
 
 type RecipieStep = {
@@ -22,17 +37,15 @@ type Recipie = {
   description?: string;
 };
 
-
 type FormRecipie = {
   name: string;
   ingredients: Ingredient[];
   link?: string;
   image_link?: string;
   description?: string;
-}
-
+};
 
 type ListOptions = {
   page: number;
   search?: string;
-}
+};

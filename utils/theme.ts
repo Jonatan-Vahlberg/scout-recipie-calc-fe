@@ -14,7 +14,7 @@ const Theme = {
       900: "#161a1d",
       300: "#d3d3d3",
       400: "#a6a6a6",
-      100: "#f5f3f4",
+      100: "#e1e1e1",
     },
     lightBlue: "#AFDBD2",
     onyx: "#36313D",

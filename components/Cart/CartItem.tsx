@@ -33,7 +33,7 @@ const ListedCartItem: React.FC<{ items: CartItem[] }> = ({ items }) => {
   }
   
   if(!item) return null
-  console.log(`Portions: ${totalPortions}`)
+  
   return (
     <Card offColor>
       <DropdownWrapper title={`${item.recipie.name} x${Math.round(totalPortions)}`} defaultState={true}>

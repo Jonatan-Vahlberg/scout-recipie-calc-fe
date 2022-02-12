@@ -1,4 +1,15 @@
-type PortionKey = "xs" | "sm" | "md" | "lg" | "xl";
+type PortionKey =
+  | "xs"
+  | "sm"
+  | "md"
+  | "lg"
+  | "xl"
+  | "VEGITARIAN"
+  | "VEGAN"
+  | "DAIRY"
+  | "MP_ALLERGIES"
+  | "GLUTEN"
+  | "LEGUMINOUS";
 
 type Portions = {
   xs: number;
@@ -6,4 +17,10 @@ type Portions = {
   md: number;
   lg: number;
   xl: number;
+  VEGITARIAN: number;
+  VEGAN: number;
+  DAIRY: number;
+  MP_ALLERGIES: number;
+  GLUTEN: number;
+  LEGUMINOUS: number;
 };

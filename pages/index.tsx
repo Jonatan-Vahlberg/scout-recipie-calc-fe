@@ -1,21 +1,10 @@
 import { NextPage } from "next";
 import Head from "next/head";
-import React, { useEffect } from "react";
+import React from "react";
 import ListView from "../components/List/ListView";
-import apiKit from "../utils/ApiKit";
-import { useList } from "../utils/context/ListContext";
 
 const HomePage: NextPage<{}> = () => {
 
-  const list = useList()
-
-  useEffect(() =>{
-    apiKit.getRecipies().then(response => {
-      list.setRecipies(response.data || [])
-    }).catch((error) => {
-      console.warn(`ERROR: GETTING RECIPIE LIST ${error}`);
-    })
-  },[])
   return (
     <div>
       <Head>

@@ -9,9 +9,10 @@ import {
 import React from "react";
 import { IconType } from "react-icons";
 
-const Indicator = styled.div`
-  width: 28px;
-  height: 28px;
+const Indicator = styled.div<{small?: boolean}>`
+
+  width: ${({ small }) =>  small ? "22px" : "28px"};
+  height: ${({ small }) =>  small ? "22px" : "28px"};
   border-radius: 14px;
   display: flex;
   align-items: center;
@@ -20,8 +21,8 @@ const Indicator = styled.div`
   color: white;
 
   & svg {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
   }
 `;
 type CategoryInfo = [IconType, string];
@@ -40,10 +41,10 @@ const categoryStyles: {
   DRY_GOOD: [GiFlour, "#C74E5A"],
 };
 
-const CategoryIndicator: React.FC<{ category: Category }> = ({ category }) => {
+const CategoryIndicator: React.FC<{ category: Category, small?: boolean }> = ({ category, small }) => {
   const [Icon, color] = categoryStyles[category];
   return (
-    <Indicator color={color}>
+    <Indicator color={color} small={small}>
       <Icon />
     </Indicator>
   );

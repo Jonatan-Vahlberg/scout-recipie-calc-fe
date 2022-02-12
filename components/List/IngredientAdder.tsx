@@ -71,8 +71,8 @@ const IngredientAdder: React.FC<IngredientsAdderProps> = ({
         <IngredientWrapper key={`INGREDIENT_ADD${index}`}>
           <StyledInput
             placeholder="#"
-            value={ingredient.base_amount}
-            onChange={(e) => _onChange(e, "base_amount", index)}
+            value={ingredient.amount}
+            onChange={(e) => _onChange(e, "amount", index)}
           />
           <StyledInput
             placeholder="Enhet"
@@ -115,7 +115,7 @@ const createNewIngredient = (): Ingredient => ({
   name: "",
   unit: "",
   //@ts-ignore
-  base_amount: "",
+  amount: "",
 });
 
 export default IngredientAdder;

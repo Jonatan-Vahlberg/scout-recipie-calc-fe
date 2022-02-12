@@ -5,6 +5,7 @@ module.exports = {
   },
   experimental: {
     // Enables the styled-components SWC transform
+    esmExternals: false,
     styledComponents: true,
   },
 };

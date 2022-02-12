@@ -23,6 +23,12 @@ const defaultState: Portions = {
   md: 0,
   lg: 0,
   xl: 4,
+  VEGITARIAN: 0,
+  VEGAN: 0,
+  DAIRY: 0,
+  MP_ALLERGIES: 0,
+  GLUTEN: 0,
+  LEGUMINOUS: 0,
 };
 
 const defaultContextState: PortionContextInterface = {
