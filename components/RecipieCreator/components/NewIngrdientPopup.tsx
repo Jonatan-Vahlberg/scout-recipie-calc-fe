@@ -109,14 +109,14 @@ const NewIngrdientPopup: React.FC<NewIngrdientPopupProps> = ({
       unit: selectedIngredient.unit,
       category: selectedIngredient.category,
       ingredient_id: selectedIngredient.id,
-      amount,
+      amount: amount || null,
       replaces: replaces ? replaces : null,
       replaces_reason: replacesReason,
       id: undefined,
     });
     _dismiss();
   };
-
+  console.log("REP", replaces)
   if (!visible) return null;
   return (
     <>
@@ -163,7 +163,9 @@ const NewIngrdientPopup: React.FC<NewIngrdientPopupProps> = ({
               >
                 <option value="">Inget val</option>
                 {addedIngredients.map((ingredient) => (
-                  <option value={ingredient.id}>{ingredient.name}</option>
+                  <option value={ingredient.ingredient_id}>
+                    {ingredient.name}
+                  </option>
                 ))}
               </StyledInput>
               {replaces && (
@@ -176,7 +178,14 @@ const NewIngrdientPopup: React.FC<NewIngrdientPopupProps> = ({
                 <ReasonWrapper>
                   {reasons.map((reason) => (
                     <div>
-                      <input type="radio" name="reason" value={reason} onChange={(e) => setReplacesReason(e.target.value as Reason)} />
+                      <input
+                        type="radio"
+                        name="reason"
+                        value={reason}
+                        onChange={(e) =>
+                          setReplacesReason(e.target.value as Reason)
+                        }
+                      />
                       &nbsp;&nbsp;
                       {translatedReasons[reason]}
                     </div>

@@ -101,10 +101,11 @@ const RecipieModal: React.FC<ModalProps> = ({ isOpen, toggle }) => {
                       {ingredients.map((ingredient, index) => (
                         <FullIngredient
                           ingredient={ingredient}
-                          removeIngredient={(i) => {
+                          removeIngredient={() => {
                             setIngredients((state) => {
-                              state.splice(index, 1);
-                              return state;
+                              let newState = [...state];
+                              newState.splice(index, 1);
+                              return newState;
                             });
                           }}
                         />

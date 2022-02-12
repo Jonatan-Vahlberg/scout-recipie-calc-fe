@@ -42,7 +42,7 @@ const MarkingsWrapper = styled.div`
 
 type FullIngredientProps = {
   ingredient: Ingredient;
-  removeIngredient: (ingredient: Ingredient) => void;
+  removeIngredient: VoidFunction;
 };
 
 const FullIngredient: React.FC<FullIngredientProps> = ({
@@ -68,7 +68,7 @@ const FullIngredient: React.FC<FullIngredientProps> = ({
       </LeftSide>
       <div>
         <RightSide>
-          <Icon onClick={() => removeIngredient(ingredient)}></Icon>
+          <Icon onClick={removeIngredient}></Icon>
         </RightSide>
       </div>
     </Wrapper>
