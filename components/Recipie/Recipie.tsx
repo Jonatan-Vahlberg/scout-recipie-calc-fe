@@ -118,13 +118,16 @@ const Recipie = () => {
       <Card offColor style={{ gridArea: "ingredients" }}>
         <SubHeader>Ingredienser</SubHeader>
         <IngredientWrapper>
-          {recipie?.ingredients.map((ingredient) => (
-            <Ingredient
-              key={`INGREDIENT_${ingredient.name}`}
-              ingredient={ingredient}
-              portions={portions.getPortions()}
-            />
-          ))}
+          {recipie?.ingredients.map((ingredient, index, list) => {
+            let ingredientsPortions = portions.getIngredientSpesificPortions(list, ingredient)
+            return (
+              <Ingredient
+                key={`INGREDIENT_${ingredient.name}`}
+                ingredient={ingredient}
+                portions={ingredientsPortions}
+              />
+            )
+          })}
         </IngredientWrapper>
       </Card>
       {recipie.steps && (

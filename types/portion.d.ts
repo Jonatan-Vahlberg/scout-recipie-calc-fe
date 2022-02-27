@@ -1,15 +1,17 @@
-type PortionKey =
-  | "xs"
-  | "sm"
-  | "md"
-  | "lg"
-  | "xl"
-  | "VEGITARIAN"
-  | "VEGAN"
-  | "DAIRY"
-  | "MP_ALLERGIES"
-  | "GLUTEN"
-  | "LEGUMINOUS";
+type BasePortionKey = "xs"
+| "sm"
+| "md"
+| "lg"
+| "xl";
+
+type AdvancedPortionKey = "VEGITARIAN"
+| "VEGAN"
+| "DAIRY"
+| "MP_ALLERGIES"
+| "GLUTEN"
+| "LEGUMINOUS";
+
+type PortionKey = BasePortionKey | AdvancedPortionKey
 
 type Portions = {
   xs: number;

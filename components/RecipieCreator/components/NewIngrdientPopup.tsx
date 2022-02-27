@@ -116,7 +116,7 @@ const NewIngrdientPopup: React.FC<NewIngrdientPopupProps> = ({
     });
     _dismiss();
   };
-  console.log("REP", replaces)
+  
   if (!visible) return null;
   return (
     <>

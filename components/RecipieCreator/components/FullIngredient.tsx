@@ -49,7 +49,7 @@ const FullIngredient: React.FC<FullIngredientProps> = ({
   ingredient,
   removeIngredient,
 }) => {
-  console.log(ingredient);
+  
   return (
     <Wrapper>
       <LeftSide>

@@ -10,7 +10,6 @@ type IngredientProps = {
 };
 
 const Ingredient: React.FC<IngredientProps> = ({ ingredient, portions }) => {
-
   
   return (
     <Card className="d-flex justify-content-between align-items-center w-100">

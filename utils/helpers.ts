@@ -23,6 +23,11 @@ export const getIngredientPortioned = (
   if (!ingredient.amount) return "";
   let amount = ingredient.amount / 4;
   amount = amount * portions;
+
+  if(amount < 1){
+    return amount.toFixed(2)
+  }
+  return Math.round(amount)
   if (ingredient.unit === "st") return Math.ceil(amount);
   if (amount > 1000) return Math.round(amount / 100) * 100;
   if (amount > 500) return Math.round(amount / 50) * 50;
@@ -40,6 +45,7 @@ const baseSizes = {
   xl: 1,
 };
 
+
 const advancedSizes = {
   VEGITARIAN: 1,
   GLUTEN: 1,
@@ -55,14 +61,12 @@ const portionSizes = {
 };
 
 export const _getPortions = (_portions: Portions) => {
-  const keys = Object.keys(_portions);
-
+  const keys = Object.keys(_portions).filter(key => key.length <= 2)
+  
   const collectedPortions = keys
-    .map((key) => _portions[key] * portionSizes[key])
+    .map((key) => _portions[key] * baseSizes[key])
     .reduce((sum, a) => sum + a);
-  return keys
-    .map((key) => _portions[key] * portionSizes[key])
-    .reduce((sum, a) => sum + a);
+  return collectedPortions
 };
 
 export const anyAdvancedSelected = (_portions: Portions) => {
