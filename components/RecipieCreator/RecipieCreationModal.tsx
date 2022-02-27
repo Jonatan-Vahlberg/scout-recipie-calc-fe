@@ -26,6 +26,7 @@ const IngredientWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-top: 16px;
 `;
 
 const RecipieModal: React.FC<ModalProps> = ({ isOpen, toggle }) => {

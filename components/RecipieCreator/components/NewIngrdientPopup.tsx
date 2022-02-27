@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDebounce } from "use-hooks";
 import apiKit from "../../../utils/ApiKit";
-import { reasons, translatedReasons } from "../../../utils/helpers";
+import { categories, reasons, translatedReasons, units } from "../../../utils/helpers";
 import Card from "../../Card";
 import { FormButton, Label, StyledInput } from "../../Styled/Form";
 import { ActionBar } from "../RecipieCreationModal";
@@ -39,6 +39,12 @@ const Error = styled.p`
   color: ${({ theme }) => theme.colors.primary[600]};
 `;
 
+const defaultIngredient: BaseIngredient = {
+  name: "default",
+  unit: "-1",
+  id: "-1",
+};
+
 type NewIngrdientPopupProps = {
   visible: boolean;
   ingredient?: Ingredient;
@@ -54,18 +60,22 @@ const NewIngrdientPopup: React.FC<NewIngrdientPopupProps> = ({
   addIngredient,
   visible,
 }) => {
+
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 300);
 
   const [ingredients, setIngredients] = useState<BaseIngredient[]>([]);
   const [selectedIngredient, setSelectedIngredient] =
     useState<BaseIngredient>();
+  const [newIngredient, setNewIngredient] =
+    useState<BaseIngredient>(defaultIngredient);
 
   const [amount, setAmount] = useState<number>();
   const [replaces, setReplaces] = useState<string>("");
   const [replacesReason, setReplacesReason] = useState<Reason>();
   const [error, setError] = useState("");
-
+  const [mode, setMode] = useState<IngredientMode>("PREEXISTING");
+  const [creating, setCreating] = useState(false)
   useEffect(() => {
     apiKit
       .getIngredients({
@@ -78,21 +88,44 @@ const NewIngrdientPopup: React.FC<NewIngrdientPopupProps> = ({
       .catch((error) => {});
   }, [debouncedSearch]);
 
+  useEffect(() => {
+    setNewIngredient((state) => ({
+      ...state,
+      name: search,
+    }));
+  }, [search]);
+
+  useEffect(() => {
+    if (selectedIngredient && mode === "NEW") {
+      setMode("PREEXISTING");
+    }
+  }, [selectedIngredient]);
+
   const resetIngredient = () => {
     setSelectedIngredient(undefined);
     setSearch("");
     setAmount(undefined);
     setReplaces("");
     setReplacesReason(undefined);
+    setMode("PREEXISTING"),
+    setCreating(false)
+    setNewIngredient(defaultIngredient)
   };
+
+  const changeNewIngredient = (key: keyof BaseIngredient, value: any) => {
+    setNewIngredient((state) => ({
+      ...state,
+      [key]: value,
+    }));
+  }
 
   const _dismiss = () => {
     resetIngredient();
     dismiss();
   };
 
-  const validateIngredient = () => {
-    if (selectedIngredient) {
+  const validateIngredient = (ingredient: BaseIngredient = selectedIngredient) => {
+    if (ingredient) {
       if (!replaces || (replaces && replacesReason)) {
         setError("");
 
@@ -104,19 +137,47 @@ const NewIngrdientPopup: React.FC<NewIngrdientPopupProps> = ({
   };
 
   const onAdding = () => {
-    addIngredient({
-      name: selectedIngredient.name,
-      unit: selectedIngredient.unit,
-      category: selectedIngredient.category,
-      ingredient_id: selectedIngredient.id,
-      amount: amount || null,
-      replaces: replaces ? replaces : null,
-      replaces_reason: replacesReason,
-      id: undefined,
-    });
-    _dismiss();
+    if (!validateIngredient(mode === "NEW" ? newIngredient : selectedIngredient)) {
+      return
+    }
+    const _addIngredient = (ingredient: BaseIngredient) => {
+      addIngredient({
+        name: ingredient.name,
+        unit: ingredient.unit !== "-1" ? ingredient.unit : undefined,
+        category: ingredient.category !== "-1" ? ingredient.category : undefined,
+        ingredient_id: ingredient.id,
+        amount: amount || null,
+        replaces: replaces ? replaces : null,
+        replaces_reason: replacesReason,
+        id: undefined,
+      });
+      _dismiss();
+    }
+    if(mode === "NEW"){
+      setCreating(true);
+      apiKit.createIngredient({
+        name: newIngredient.name,
+        unit: newIngredient.unit !== "-1" ? newIngredient.unit : undefined,
+        //@
+        category: newIngredient.category !== "-1" ? newIngredient.category : undefined,
+        id: undefined,
+      })
+      .then((response) => {
+        console.log(response);
+        _addIngredient(response.data)
+      })
+      .catch(error => {
+        setError("Ett problem upstod under skapandet försök igen.")
+      })
+      .finally(() => setCreating(false));
+      return 
+    }
+    _addIngredient(selectedIngredient)
+    
   };
-  
+
+  const disabled = mode === "PREEXISTING" && !selectedIngredient || mode === "NEW" && newIngredient.name === ""; 
+
   if (!visible) return null;
   return (
     <>
@@ -124,11 +185,13 @@ const NewIngrdientPopup: React.FC<NewIngrdientPopupProps> = ({
       <Popup className="shadow-sm">
         <Card offColor>
           <Label className="mb-3">
-            <strong>Ny ingrediens (baserat på 4 portioner)</strong>
+            <strong>Lägg till ingrediens (baserat på 4 portioner)</strong>
           </Label>
           <IngredientSearch
             search={search}
             setSearch={setSearch}
+            changeMode={setMode}
+            mode={mode}
             ingredients={ingredients.filter(
               (i) =>
                 !addedIngredients
@@ -138,73 +201,121 @@ const NewIngrdientPopup: React.FC<NewIngrdientPopupProps> = ({
             onSelect={setSelectedIngredient}
             selected={selectedIngredient}
           />
-          <SmallLabel className="my-2">
-            <strong>Extra detaljer</strong>
-          </SmallLabel>
-
-          <SmallLabel className="mb-2 w-100">Mängd?</SmallLabel>
-          <StyledInput
-            type="number"
-            placeholder="#"
-            className="w-25"
-            value={amount}
-            onChange={(e) => setAmount(Number(e.target.value))}
-          />
-
-          {addedIngredients.length !== 0 && (
+        
+           
+          {mode === "NEW" && (
             <div>
-              <SmallLabel className="mb-2 w-100">Ersätter</SmallLabel>
-              <StyledInput
-                as="select"
-                value={replaces}
-                onChange={(e) => setReplaces(e.target.value)}
-                placeholder="#"
-                className="w-100"
-              >
-                <option value="">Inget val</option>
-                {addedIngredients.map((ingredient) => (
-                  <option value={ingredient.ingredient_id}>
-                    {ingredient.name}
-                  </option>
-                ))}
-              </StyledInput>
-              {replaces && (
-                <SmallLabel className="mb-2 w-100">
-                  <strong>Anledning</strong>
-                </SmallLabel>
-              )}
+              <SmallLabel className="my-2">
+                <strong>Ny ingrediens</strong>
+              </SmallLabel>
+              <br />
 
-              {replaces && (
-                <ReasonWrapper>
-                  {reasons.map((reason) => (
-                    <div>
-                      <input
-                        type="radio"
-                        name="reason"
-                        value={reason}
-                        onChange={(e) =>
-                          setReplacesReason(e.target.value as Reason)
-                        }
-                      />
-                      &nbsp;&nbsp;
-                      {translatedReasons[reason]}
-                    </div>
-                  ))}
-                </ReasonWrapper>
-              )}
+              <SmallLabel className="my-2">Namn</SmallLabel>
+              <StyledInput
+                type="text"
+                placeholder="Namn"
+                className=""
+                value={newIngredient.name}
+                onChange={(e) =>changeNewIngredient("name", e.target.value)}
+              />
+              <div>
+                <div>
+                  <SmallLabel className="my-2">Enhet</SmallLabel>
+                  <StyledInput
+                    as="select"
+                    placeholder="Namn"
+                    className=""
+                    value={newIngredient.unit}
+                    onChange={(e) =>changeNewIngredient("unit", e.target.value)}
+                  >
+                    {units.map(unit => (
+                      <option key={`UNIT_45_${unit.value}`} value={unit.value}>{unit.title}</option>
+                    ))}
+                  </StyledInput>
+                </div>
+                <div>
+                  <SmallLabel className="my-2">Kategori</SmallLabel>
+                  <StyledInput
+                    as="select"
+                    placeholder="Namn"
+                    className=""
+                    value={newIngredient.category || "-1"}
+                    onChange={(e) =>changeNewIngredient("category", e.target.value)}
+                    >
+                    {categories.map(category => (
+                      <option key={`CATEGORGY_${category.value}`} value={category.value}>{category.title}</option>
+                    ))}
+                  </StyledInput>
+                </div>
+              </div>
             </div>
           )}
+           <div>
+              <SmallLabel className="my-2">
+                <strong>Extra detaljer</strong>
+              </SmallLabel>
+
+              <SmallLabel className="mb-2 w-100">Mängd?</SmallLabel>
+              <StyledInput
+                type="number"
+                placeholder="#"
+                className="w-25"
+                value={amount}
+                onChange={(e) => setAmount(Number(e.target.value))}
+              />
+
+              {addedIngredients.length !== 0 && (
+                <div>
+                  <SmallLabel className="mb-2 w-100">Ersätter</SmallLabel>
+                  <StyledInput
+                    as="select"
+                    value={replaces}
+                    onChange={(e) => setReplaces(e.target.value)}
+                    placeholder="#"
+                    className="w-100"
+                  >
+                    <option value="">Inget val</option>
+                    {addedIngredients.map((ingredient) => (
+                      <option value={ingredient.ingredient_id}>
+                        {ingredient.name}
+                      </option>
+                    ))}
+                  </StyledInput>
+                  {replaces && (
+                    <SmallLabel className="mb-2 w-100">
+                      <strong>Anledning</strong>
+                    </SmallLabel>
+                  )}
+
+                  {replaces && (
+                    <ReasonWrapper>
+                      {reasons.map((reason) => (
+                        <div>
+                          <input
+                            type="radio"
+                            name="reason"
+                            value={reason}
+                            onChange={(e) =>
+                              setReplacesReason(e.target.value as Reason)
+                            }
+                          />
+                          &nbsp;&nbsp;
+                          {translatedReasons[reason]}
+                        </div>
+                      ))}
+                    </ReasonWrapper>
+                  )}
+                </div>
+              )}
+            </div>
+          
           {error && <Error>{error}</Error>}
           <ActionBar>
             <FormButton cancel type="button" onClick={_dismiss}>
               Avbryt
             </FormButton>
-            <FormButton
-              onClick={onAdding}
-              disabled={!validateIngredient}
-              type="button"
-            >
-              Lägg till
+            <FormButton onClick={onAdding} disabled={disabled || creating} type="button">
+              {mode === "NEW" ? "Skapa" : "Lägg till"}
             </FormButton>
           </ActionBar>
         </Card>

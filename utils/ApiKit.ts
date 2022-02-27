@@ -33,8 +33,8 @@ class ApiKit {
     return axios.get(`${this.ingredient_url}?${query}`);
   }
 
-  createIngredient(ingredient: BaseIngredient) {
-    return axios.post(`${this.base_url}`, ingredient);
+  createIngredient(ingredients: BaseIngredient | BaseIngredient[]) {
+    return axios.post(`${this.ingredient_url}`, ingredients);
   }
 }
 const apiKit = new ApiKit();

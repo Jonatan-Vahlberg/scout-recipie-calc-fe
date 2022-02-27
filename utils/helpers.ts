@@ -7,6 +7,76 @@ export const reasons: Reason[] = [
   "LEGUMINOUS",
 ];
 
+export const units: Unit[] = [
+  {
+    value: "-1",
+    title: "Ingen enhet"
+  },
+  {
+    value: "st",
+    title: "Styck"
+  },
+  {
+    value: "ml",
+    title: "Milliliter"
+  },
+  {
+    value: "cl",
+    title: "Centiliter"
+  },
+  {
+    value: "dl",
+    title: "Deciliter"
+  },{
+    value: "l",
+    title: "Liter"
+  }
+  ,{
+    value: "g",
+    title: "Gram"
+  },{
+    value: "kg",
+    title: "Kilogram"
+  },
+  {
+    value: "krm",
+    title: "Kryddmått"
+  },
+  {
+    value: "tsk",
+    title: "Tesked"
+  }, {
+    value: "msk",
+    title: "Matsked"
+  }
+]
+
+export const categories: CategoryObj[] = [
+  {
+    value: "-1",
+    title: "Ingen kategori"
+  },
+  {
+    value: "FRUIT",
+    title: "Frukt"
+  },
+  {
+    value: "VEGETABLE",
+    title: "Grönsak"
+  },
+  {
+    value: "DRY_GOOD",
+    title: "Torrvara"
+  },{
+    value: "REFRIGERATED",
+    title: "Kylvara"
+  }
+  ,{
+    value: "SPICE",
+    title: "Krydda/Tillbehör"
+  }
+]
+
 export const translatedReasons = {
   VEGITARIAN: "Veg",
   VEGAN: "Vegan",

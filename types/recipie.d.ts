@@ -1,4 +1,18 @@
-type Category = "VEGETABLE" | "FRUIT" | "REFRIGERATED" | "SPICE" | "DRY_GOOD";
+type Category = "VEGETABLE" | "FRUIT" | "REFRIGERATED" | "SPICE" | "DRY_GOOD" | "-1";
+
+type CategoryObj = {
+  value: Category;
+  title: string;
+}
+
+type IngredientMode = "NEW" | "PREEXISTING";
+
+type UnitSignifier = "ml" | "cl" | "dl" | "l" | "g" | "kg" | "krm" | "tsk" | "msk" |  "st" | "-1";
+
+type Unit = {
+  value: UnitSignifier;
+  title: string;
+}
 
 type Reason =
   | "VEGITARIAN"
@@ -10,7 +24,7 @@ type Reason =
 
 type BaseIngredient = {
   name: string;
-  unit?: string;
+  unit?: UnitSignifier;
   category?: Category;
   id: string;
 };
