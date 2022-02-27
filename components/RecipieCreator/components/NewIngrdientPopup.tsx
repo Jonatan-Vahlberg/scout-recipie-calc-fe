@@ -276,7 +276,10 @@ const NewIngrdientPopup: React.FC<NewIngrdientPopupProps> = ({
                   >
                     <option value="">Inget val</option>
                     {addedIngredients.map((ingredient) => (
-                      <option value={ingredient.ingredient_id}>
+                      <option
+                      key={`SELECTABLE_REPLACEABLE_ING${ingredient.ingredient_id}`}
+                      
+                      value={ingredient.ingredient_id}>
                         {ingredient.name}
                       </option>
                     ))}
@@ -290,7 +293,8 @@ const NewIngrdientPopup: React.FC<NewIngrdientPopupProps> = ({
                   {replaces && (
                     <ReasonWrapper>
                       {reasons.map((reason) => (
-                        <div>
+                        <div
+                        key={`SELECTABLE_REASONS_REASON${reason}`}>
                           <input
                             type="radio"
                             name="reason"
