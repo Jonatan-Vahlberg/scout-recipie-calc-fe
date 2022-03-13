@@ -27,22 +27,8 @@ const ListHeader = () => {
   const firstUpdate = useRef(false);
   useEffect(() => {
     if (firstUpdate.current) {
-      if (debouncedValue === "") {
-        list.setOptions((options) => {
-          delete options.search;
-          
-          return {
-            page: 1,
-          };
-        });
-        return;
-      }
-
-      list.setOptions((options) => ({
-        ...options,
-        search: debouncedValue,
-        page: 1,
-      }));
+      list.setPage(1)
+      list.setSearch(debouncedValue);
     }
     firstUpdate.current = true;
   }, [debouncedValue]);

@@ -18,28 +18,25 @@ const PagerButton = styled(Button)`
 `;
 
 const Paginator = () => {
-  const { options, setOptions, recipies } = useList();
+  const {page, recipies, recipiesStatus, setPage } = useList();
   
   const onPaginate = (altering: number) => {
-    setOptions((options) => ({
-      ...options,
-      page: options.page + altering,
-    }));
+    setPage(prevPage => prevPage + altering);
   };
 
   return (
     <PaginationWrapper>
       <PagerButton
-        disabled={recipies.loading || !recipies.previous}
+        disabled={recipiesStatus === "loading" || !recipies.previous}
         onClick={() => onPaginate(-1)}
       >
         <AiOutlineArrowLeft />
       </PagerButton>
       <Text>
-        <strong>{options.page}</strong>
+        <strong>{page}</strong>
       </Text>
       <PagerButton
-        disabled={recipies.loading || !recipies.next}
+        disabled={recipiesStatus === "loading" || !recipies.next}
         onClick={() => onPaginate(1)}
       >
         <AiOutlineArrowRight />

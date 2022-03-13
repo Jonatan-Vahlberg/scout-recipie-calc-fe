@@ -8,10 +8,13 @@ import { ListProvider } from "../utils/context/ListContext";
 import NavHeader from "../components/Header";
 import Head from "next/head";
 import { CartProvider } from "../utils/context/CartContext";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const Layout = styled.div`
   min-height: 100vh;
 `;
+
+export const queryClient = new QueryClient()
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -24,6 +27,8 @@ function MyApp({ Component, pageProps }) {
           crossOrigin="anonymous"
         />
       </Head>
+      <QueryClientProvider client={queryClient}>
+
       <ThemeProvider theme={Theme}>
         <CartProvider>
           <ListProvider>
@@ -40,6 +45,7 @@ function MyApp({ Component, pageProps }) {
           </ListProvider>
         </CartProvider>
       </ThemeProvider>
+      </QueryClientProvider>
     </div>
   );
 }

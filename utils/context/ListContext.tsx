@@ -1,5 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { QueryFunction, useQuery } from "react-query";
+import { queryClient } from "../../pages/_app";
 import apiKit from "../ApiKit";
 
 type RecipieList = {
@@ -7,7 +9,6 @@ type RecipieList = {
   next?: string;
   previous?: string;
   results: Recipie[];
-  loading: boolean;
 };
 
 const defaultList: RecipieList = {
@@ -15,49 +16,41 @@ const defaultList: RecipieList = {
   results: [],
   next: null,
   previous: null,
-  loading: false,
 };
 
 type PortionContextInterface = {
   recipies: RecipieList;
-  setRecipies: (recipies?: RecipieList) => void;
+  recipiesStatus: "idle" | "error" | "loading" | "success";
   options: ListOptions;
-  setOptions: React.Dispatch<React.SetStateAction<ListOptions>>;
+  page: number;
+  search: string;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
   createRecipie: (
     recipie: FormRecipie,
     onCreation: VoidFunction,
     onError: VoidFunction
   ) => void;
-  getRecipies: (onSuccess?: VoidFunction, onError?: VoidFunction) => void;
 };
 
 const ListContext = React.createContext<Partial<PortionContextInterface>>({});
 
 const ListProvider: React.FC = ({ children }) => {
   const router = useRouter();
-  const [recipies, setRecipies] = useState<RecipieList>(defaultList);
   const [options, setOptions] = useState<ListOptions>({ page: 1 });
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
 
-  const getRecipies = (
-    onSuccess: VoidFunction = () => {},
-    onError: VoidFunction = () => {}
-  ) => {
-    setRecipies({ ...recipies, loading: true });
-    apiKit
-      .getRecipies(options)
-      .then((response) => {
-        setRecipies({
-          ...response.data,
-          loading: false,
-        });
-        onSuccess();
+
+  const  getRecipies: QueryFunction<any, (string | number)[]> = async (query) => {
+    const [key, _page, _search] = query.queryKey as [string, number, string];
+    const response =  await apiKit
+      .getRecipies({
+        page: _page,
+        search: _search
       })
-      .catch((error) => {
-        setRecipies({ ...recipies, loading: true });
 
-        console.warn("ERROR: could not get recipies", error);
-        onError();
-      });
+    return response.data
   };
 
   const createRecipie = (
@@ -68,8 +61,8 @@ const ListProvider: React.FC = ({ children }) => {
     apiKit
       .createRecipie(recipie)
       .then((response) => {
-        getRecipies();
         onCreation();
+        queryClient.invalidateQueries('recipies')
         router.push(`/${response.data.id}/`);
       })
       .catch((error) => {
@@ -78,14 +71,22 @@ const ListProvider: React.FC = ({ children }) => {
       });
   };
 
+  const {data: recipies, status: recipiesStatus } = useQuery(['recipies',page,search],getRecipies, {
+    initialData: defaultList,
+    keepPreviousData: true,
+  });
+
+  console.log(recipies, recipiesStatus)
   return (
     <ListContext.Provider
       value={{
         recipies,
-        setRecipies,
+        recipiesStatus,
         options,
-        setOptions,
-        getRecipies,
+        page,
+        search,
+        setSearch,
+        setPage,
         createRecipie,
       }}
     >

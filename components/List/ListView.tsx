@@ -37,9 +37,6 @@ const ListView = ({}) => {
   const toggle = () => setIsOpen(!isOpen);
   
 
-  useEffect(() => {
-    list.getRecipies();
-  }, [list.options]);
 
   return (
     <ListBox className="mt-3 ht-100">
