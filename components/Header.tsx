@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import Card from "./Card";
 import CartComponent from "./Cart/CartComponent";
+import Drawer from "./Drawer/Drawer";
+import Menu from "./Menu/Menu";
 import { Text } from "./Styled/Text";
 
 const HeaderBar = styled.div`
@@ -48,7 +50,9 @@ const NavHeader: React.FC = () => {
             <Header>Scoutrecpt kalkylator</Header>
           </HeaderWrapper>
         </Wrapper>
+        <Menu/>
         <CartComponent />
+        <Drawer/>
       </HeaderBar>
     </Card>
   );

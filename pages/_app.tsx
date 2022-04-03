@@ -9,42 +9,36 @@ import NavHeader from "../components/Header";
 import Head from "next/head";
 import { CartProvider } from "../utils/context/CartContext";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { DrawerProvider } from "../utils/context/DrawerContext";
 
 const Layout = styled.div`
   min-height: 100vh;
 `;
 
-export const queryClient = new QueryClient()
+export const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }) {
   return (
     <div>
-      <Head>
-        <link
-          rel="stylesheet"
-          href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
-          crossOrigin="anonymous"
-        />
-      </Head>
       <QueryClientProvider client={queryClient}>
-
-      <ThemeProvider theme={Theme}>
-        <CartProvider>
-          <ListProvider>
-            <RecipieProvider>
-              <PortionsProvider>
-                <Layout className="h-100">
-                  <NavHeader />
-                  <div className="w-100 h-100 container">
-                    <Component {...pageProps} />
-                  </div>
-                </Layout>
-              </PortionsProvider>
-            </RecipieProvider>
-          </ListProvider>
-        </CartProvider>
-      </ThemeProvider>
+        <ThemeProvider theme={Theme}>
+          <DrawerProvider>
+            <CartProvider>
+              <ListProvider>
+                <RecipieProvider>
+                  <PortionsProvider>
+                    <Layout className="h-100">
+                      <NavHeader />
+                      <div className="w-100 h-100 container">
+                        <Component {...pageProps} />
+                      </div>
+                    </Layout>
+                  </PortionsProvider>
+                </RecipieProvider>
+              </ListProvider>
+            </CartProvider>
+          </DrawerProvider>
+        </ThemeProvider>
       </QueryClientProvider>
     </div>
   );

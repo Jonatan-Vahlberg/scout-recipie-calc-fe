@@ -1,45 +1,25 @@
-import { AiOutlineShoppingCart } from "react-icons/ai";
-import styled from "styled-components";
 import { useCart } from "../../utils/context/CartContext";
-import CartDrawer from "./CartDrawer";
+import { useDrawer } from "../../utils/context/DrawerContext";
+import { HeaderButton } from "../Styled/header";
+import CartDrawerContent from "./CartDrawerContent";
 
-const Button = styled.button<{ length?: string }>`
-  position: relative;
-  background-color: transparent;
-  border: none;
-  height: 32px;
-  width: 32px;
-  border-radius: 50%;
-  font-size: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
-  &::after {
-    position: absolute;
-    right: -10px;
-    top: -10px;
-    content: ${({ length }) => length || "none"};
-    width: 24px;
-    height: 24px;
-    font-size: 11px;
-    border-radius: 50%;
-    background-color: ${({ theme }) => theme.colors.primary[200]};
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-  }
-`;
 const CartComponent = () => {
 
-  const {setIsOpen, cart} = useCart()
+  const {cart} = useCart()
+  const drawer = useDrawer()
+
+  const setDrawer = () => {
+    drawer.actions.setTitle("Kundvagn");
+    drawer.actions.setContent(<CartDrawerContent/>)
+    drawer.actions.setIsOpen(true)
+  }
+
   return (
     <>
-      <Button onClick={() => setIsOpen(true)} length={getLength(cart.length)}>
+      <HeaderButton onClick={setDrawer} length={getLength(cart.length)}>
         <i className="fas fa-shopping-cart"></i>
-        <CartDrawer/>
-      </Button>
+      </HeaderButton>
     </>
   );
 };
