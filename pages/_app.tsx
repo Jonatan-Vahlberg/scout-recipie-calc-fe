@@ -10,6 +10,7 @@ import Head from "next/head";
 import { CartProvider } from "../utils/context/CartContext";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { DrawerProvider } from "../utils/context/DrawerContext";
+import { UserProvider } from "../utils/context/UserContext";
 
 const Layout = styled.div`
   min-height: 100vh;
@@ -22,6 +23,8 @@ function MyApp({ Component, pageProps }) {
     <div>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={Theme}>
+          <UserProvider>
+
           <DrawerProvider>
             <CartProvider>
               <ListProvider>
@@ -38,6 +41,7 @@ function MyApp({ Component, pageProps }) {
               </ListProvider>
             </CartProvider>
           </DrawerProvider>
+          </UserProvider>
         </ThemeProvider>
       </QueryClientProvider>
     </div>

@@ -34,6 +34,11 @@ export const HeaderWrapper = styled.div`
   }
 `;
 
+export const Navigation = styled.div`
+  display: flex;
+  gap: 16px;
+`
+
 const Unclickable = styled.div`
   pointer-events: none;
 `;
@@ -50,8 +55,11 @@ const NavHeader: React.FC = () => {
             <Header>Scoutrecpt kalkylator</Header>
           </HeaderWrapper>
         </Wrapper>
-        <Menu/>
+        <Navigation>
+
         <CartComponent />
+        <Menu/>
+        </Navigation>
         <Drawer/>
       </HeaderBar>
     </Card>

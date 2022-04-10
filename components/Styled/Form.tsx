@@ -13,6 +13,11 @@ export const StyledField = styled(Field)`
   ${FieldStyle}
 `;
 
+export const StyledError = styled.p<{ touched?: boolean }>`
+  display: ${({ touched}) =>  touched ? "block" : "none"};
+  color: ${({theme}) => theme.colors.primary["600"]}
+`
+
 export const FormButton = styled.button<{ cancel?: boolean }>`
   width: 100%;
   height: 40px;
@@ -23,6 +28,20 @@ export const FormButton = styled.button<{ cancel?: boolean }>`
 
   ${({cancel}) => cancel ? ColorGray : ''}
 `;
+
+export const TertiaryFormButton = styled.button`
+  border: 0;
+  background-color: transparent;
+  color: ${({theme}) => theme.colors.primary[300]};
+  width: 100%;
+  text-align: center;
+  padding: 8px;
+  margin-top: 16px;
+  transition: all 0.3s;
+  &:hover {
+    color: ${({theme}) => theme.colors.primary[600]};
+  }
+`
 
 export const StyledInput = styled.input`
   ${FieldStyle}

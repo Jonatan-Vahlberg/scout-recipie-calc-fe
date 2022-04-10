@@ -16,7 +16,7 @@ const Menu = () => {
 
     return (
         <HeaderButton onClick={setDrawer}>
-        <i className="fas fa-key"></i>
+        <i className="fas fa-sign-in"></i>
       </HeaderButton>
     )
 }
