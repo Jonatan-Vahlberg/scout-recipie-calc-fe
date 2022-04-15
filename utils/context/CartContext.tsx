@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react"
 import CartItem from "../../components/Cart/CartItem"
 import { getIngredientPortioned, _getPortions } from "../helpers"
+import StorageKit from "../StorageKit"
 import { usePortions } from "./PortionContext"
 
 
@@ -44,11 +45,11 @@ const CartProvider: React.FC = ({children}) => {
     if(cart){
       setIngredients(cart.map(item => item.recipie.ingredients).flat(1))
     }
-    localStorage.setItem(STORAGE_CART_KEY, JSON.stringify(cart))
+    StorageKit.setItem("@LOCAL_CART", JSON.stringify(cart))
   },[cart])
 
   const _checkStorage = () => {
-    const storedCart = localStorage.getItem(STORAGE_CART_KEY)
+    const storedCart = StorageKit.getItem("@LOCAL_CART")
     if(storedCart){
       setCart(JSON.parse(storedCart))
     }

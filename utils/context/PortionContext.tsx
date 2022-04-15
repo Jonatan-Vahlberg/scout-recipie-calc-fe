@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { _getPortions } from "../helpers";
+import StorageKit from "../StorageKit";
 const portionSizes = {
   xs: 0.7,
   sm: 0.8,
@@ -56,11 +57,11 @@ const PortionsProvider: React.FC = ({ children }) => {
       checkStorage();
       return;
     }
-    localStorage.setItem(PORTIONS_STORAGE_KEY, JSON.stringify(portions));
+    StorageKit.setItem("@LOCAL_PORTIONS", JSON.stringify(portions));
   }, [portions]);
 
   const checkStorage = () => {
-    const storedPortions = localStorage.getItem(PORTIONS_STORAGE_KEY);
+    const storedPortions = StorageKit.getItem("@LOCAL_PORTIONS");
     if (storedPortions) {
       setPortions(JSON.parse(storedPortions));
     }

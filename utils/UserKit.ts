@@ -14,7 +14,7 @@ class UserKit {
   }
 
   login(payload: any) {
-      return axios.post(`${this.base_url}login/`, payload)
+      return axios.post(`${process.env.NEXT_PUBLIC_API_BASE}api/token/`, payload)
   }
 
  

@@ -8,6 +8,7 @@ import { FaPlus } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import ListHeader from "./ListHeader";
 import RecipieModal from "../RecipieCreator/RecipieCreationModal";
+import { useUser } from "../../utils/context/UserContext";
 
 const ListBox = styled(Card)`
   height: calc(100vh - 170px);
@@ -32,7 +33,7 @@ const bottomLeft = css`
 
 const ListView = ({}) => {
   const list = useList();
-
+  const user = useUser();
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   
@@ -51,9 +52,9 @@ const ListView = ({}) => {
       </List>
       <Divider></Divider>
       <Paginator />
-      <FAB position={bottomLeft} onClick={toggle}>
+     {user.token && <FAB position={bottomLeft} onClick={toggle}>
         <FaPlus />
-      </FAB>
+      </FAB>}
       <RecipieModal isOpen={isOpen} toggle={toggle} />
     </ListBox>
   );

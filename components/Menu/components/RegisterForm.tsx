@@ -9,9 +9,11 @@ import {
 import { object, string as yupString } from "yup";
 import { AuthFormProps } from "./LoginForm";
 import { useUser } from "../../../utils/context/UserContext";
+import { useDrawer } from "../../../utils/context/DrawerContext";
 
 const RegisterForm = ({ setMode }: AuthFormProps) => {
   const user = useUser();
+  const drawer = useDrawer()
   return (
     <Formik
       initialValues={{
@@ -23,7 +25,9 @@ const RegisterForm = ({ setMode }: AuthFormProps) => {
       onSubmit={(values) => {
         user.actions.register(
           { ...values, email: values.username },
-          () => {},
+          () => {
+            drawer.actions.setIsOpen(false);
+          },
           () => {}
         );
       }}

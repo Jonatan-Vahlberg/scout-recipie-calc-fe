@@ -48,7 +48,7 @@ const LoginForm = ({setMode}: AuthFormProps) => {
           <StyledError touched={touched.password}>
             {errors.password}
           </StyledError>
-          <FormButton className="mt-0" type="submit">
+          <FormButton className="mt-3" type="submit">
             Logga in
           </FormButton>
 
