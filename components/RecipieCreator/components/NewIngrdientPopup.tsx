@@ -163,7 +163,7 @@ const NewIngrdientPopup: React.FC<NewIngrdientPopupProps> = ({
         id: undefined,
       })
       .then((response) => {
-        console.log(response);
+        
         _addIngredient(response.data)
       })
       .catch(error => {

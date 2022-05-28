@@ -9,18 +9,20 @@ type IngredientProps = {
   portions: number;
 };
 
-const Ingredient: React.FC<IngredientProps> = ({ ingredient, portions }) => {
+const Ingredient: React.FC<IngredientProps> = (props) => {
+  const { portions, ingredient } = props;
+  const {name, category, unit} = ingredient.ingredient
   
   return (
     <Card className="d-flex justify-content-between align-items-center w-100">
       <Text className="mb-0">
         <strong>
-          {getIngredientPortioned(ingredient, portions)} {ingredient.unit}
+          {getIngredientPortioned(ingredient, portions)} {unit}
         </strong>{" "}
-        {ingredient.name}
+        {name}
       </Text>
-      {ingredient.category && (
-        <CategoryIndicator category={ingredient.category} />
+      {category && (
+        <CategoryIndicator category={category} />
       )}
     </Card>
   );

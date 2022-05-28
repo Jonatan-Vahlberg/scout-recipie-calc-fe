@@ -1,10 +1,11 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import StorageKit from "../StorageKit";
 import userKit from "../UserKit";
 
 type UserContextType = {
   cart?: UserCart;
   token?: Token;
+  user?: any;
   actions: {
     login: (payload: any, onLogin: VoidFunction, onError: VoidFunction) => void;
     register: (
@@ -24,9 +25,6 @@ const UserContext = createContext<UserContextType>({
   },
 });
 
-const STORAGE_ACCESS_TOKEN = "@STORAGE_ACCESS_TOKEN"
-const STORAGE_REFRESH_TOKEN = "@STORAGE_REFRESH_TOKEN"
-
 const UserProvider = ({ children }) => {
 
   const getToken = (): Token | undefined => {
@@ -45,7 +43,6 @@ const UserProvider = ({ children }) => {
 
   const [token, setToken] = useState(getToken());
 
-
   const setLocalToken = (token: any) => {
     setToken(token)
     StorageKit.setItem("@LOCAL_ACCESS", token.access)
@@ -56,7 +53,51 @@ const UserProvider = ({ children }) => {
     setToken(undefined)
     StorageKit.removeItem("@LOCAL_ACCESS")
     StorageKit.removeItem("@LOCAL_REFRESH")
-  } 
+  }
+
+  const refresh = () => {
+    const storedRefresh = StorageKit.getItem("@LOCAL_REFRESH")
+    const storedAccess = StorageKit.getItem("@LOCAL_ACCESS")
+
+    userKit.refresh({refresh: storedRefresh, access: storedAccess})
+    .then((response) => {
+      setToken((state) => ({
+        ...state,
+        access: response.data.access
+      }))
+    })
+    .catch((error) => {
+      console.warn("ERROR: unable to refresh", error)
+    })
+  }
+
+  const getUser = () => {
+    userKit.getUser()
+    .then((response) => {
+      console.log(response)
+    })
+    .catch(error => {
+      console.warn("ERROR: unable to retrieve user", error)
+    })
+  }
+  
+  useEffect(() => {
+    const storedAccess = StorageKit.getItem("@LOCAL_ACCESS")
+    const storedRefresh = StorageKit.getItem("@LOCAL_REFRESH")
+    if(storedAccess){
+      setToken({
+      access: storedAccess,
+      refresh: storedRefresh   
+      })
+    }
+  },[])
+
+  useEffect(() => {
+    if(token){
+      getUser()
+    }
+  },[token])
+  
   
 
   return (

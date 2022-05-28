@@ -18,7 +18,8 @@ const Layout = styled.div`
 
 export const queryClient = new QueryClient();
 
-function MyApp({ Component, pageProps }) {
+const MyApp = ({ Component, pageProps }) => {
+
   return (
     <div>
       <QueryClientProvider client={queryClient}>

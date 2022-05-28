@@ -1,4 +1,5 @@
 import axios from "axios";
+import apiKit from "./ApiKit";
 
 type Options = {};
 
@@ -17,7 +18,13 @@ class UserKit {
       return axios.post(`${process.env.NEXT_PUBLIC_API_BASE}api/token/`, payload)
   }
 
- 
+  refresh(payload: any) {
+    return axios.post(`${process.env.NEXT_PUBLIC_API_BASE}api/token/refresh/`, payload)
+  }
+
+  getUser() {
+    return apiKit.authenicatedGet(`${this.base_url}`)
+  }
 }
 const userKit = new UserKit();
 export default userKit;

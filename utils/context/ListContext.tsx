@@ -76,7 +76,7 @@ const ListProvider: React.FC = ({ children }) => {
     keepPreviousData: true,
   });
 
-  console.log(recipies, recipiesStatus)
+  
   return (
     <ListContext.Provider
       value={{

@@ -101,7 +101,7 @@ const PortionsProvider: React.FC = ({ children }) => {
     ingredient: Ingredient
   ) => {
     let ingredientsPortions = getPortions();
-    console.log(ingredient.name, ingredientsPortions)
+    
     if (ingredient.replaces && ingredient.replaces_reason) {
       return portions[ingredient.replaces_reason];
     }
@@ -109,9 +109,9 @@ const PortionsProvider: React.FC = ({ children }) => {
       return 0;
     }
     const filteredList = list
-      .filter((i) => i.ingredient_id !== ingredient.ingredient_id)
-      .filter((i) => i.replaces === ingredient.ingredient_id);
-    console.log(ingredient.name, filteredList)
+      .filter((i) => i.ingredient.id !== ingredient.ingredient.id)
+      .filter((i) => i.replaces === ingredient.ingredient.id);
+    
 
     if(filteredList.length !== 0){
       filteredList.forEach(i => {

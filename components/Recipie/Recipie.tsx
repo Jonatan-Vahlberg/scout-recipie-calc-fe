@@ -122,7 +122,7 @@ const Recipie = () => {
             let ingredientsPortions = portions.getIngredientSpesificPortions(list, ingredient)
             return (
               <Ingredient
-                key={`INGREDIENT_${ingredient.name}`}
+                key={`INGREDIENT_${ingredient.ingredient.id}`}
                 ingredient={ingredient}
                 portions={ingredientsPortions}
               />

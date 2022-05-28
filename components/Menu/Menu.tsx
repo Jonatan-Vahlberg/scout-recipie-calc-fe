@@ -12,7 +12,7 @@ const Menu = () => {
     drawer.actions.setContent(<UnauthenticatedDrawerContent />);
     drawer.actions.setIsOpen(true);
   };
-  console.log(user, user.token?.access);
+  
   return (
     <>
       {!user.token?.access && (

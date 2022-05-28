@@ -42,7 +42,7 @@ const DrawerWrapper = styled(Card)<{ isOpen: boolean }>`
 
 const Drawer = () => {
   const drawer = useDrawer()
-    console.log(drawer)
+    
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   useEffect(() => {
     if (drawer.isOpen) {

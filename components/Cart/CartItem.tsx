@@ -41,7 +41,7 @@ const ListedCartItem: React.FC<{ items: CartItem[] }> = ({ items }) => {
 
         {item.recipie.ingredients.map((ingredient) => (
           <Ingredient
-          key={`INGREDIENT_IN_LIST_${ingredient.name}`}
+          key={`INGREDIENT_IN_LIST_${ingredient.ingredient.id}`}
           ingredient={ingredient}
           portions={totalPortions}
           />

@@ -98,11 +98,11 @@ export const getIngredientPortioned = (
     return amount.toFixed(2)
   }
   return Math.round(amount)
-  if (ingredient.unit === "st") return Math.ceil(amount);
+  if (ingredient.ingredient.unit === "st") return Math.ceil(amount);
   if (amount > 1000) return Math.round(amount / 100) * 100;
   if (amount > 500) return Math.round(amount / 50) * 50;
   if (amount > 50) return Math.round(amount / 10) * 10;
-  if (amount < 10 && ingredient.category === "SPICE")
+  if (amount < 10 && ingredient.ingredient.category === "SPICE")
     return (Math.round(amount * 10) / 10).toFixed(1);
   return amount;
 };

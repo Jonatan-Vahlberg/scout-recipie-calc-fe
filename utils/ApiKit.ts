@@ -1,12 +1,13 @@
 import axios from "axios";
+import StorageKit from "./StorageKit";
 
 type Options = {};
 
 class ApiKit {
-  base_url: string;
+  recipie_url: string;
   ingredient_url: string;
   constructor() {
-    this.base_url = `${process.env.NEXT_PUBLIC_API_BASE}api/v1/recipies/`;
+    this.recipie_url = `${process.env.NEXT_PUBLIC_API_BASE}api/v1/recipies/`;
     this.ingredient_url = `${process.env.NEXT_PUBLIC_API_BASE}api/v1/ingredients/`;
   }
 
@@ -14,15 +15,15 @@ class ApiKit {
     const query = Object.keys(options)
       .map((key) => `${key}=${options[key]}`)
       .join("&");
-    return axios.get(`${this.base_url}?${query}`);
+    return axios.get(`${this.recipie_url}?${query}`);
   }
 
   getRecipie(id: number) {
-    return axios.get(`${this.base_url}${id}/`);
+    return axios.get(`${this.recipie_url}${id}/`);
   }
 
   createRecipie(recipie: FormRecipie) {
-    return axios.post(`${this.base_url}`, recipie);
+    return axios.post(`${this.recipie_url}`, recipie);
   }
 
   getIngredients(options?: ListOptions) {
@@ -35,6 +36,33 @@ class ApiKit {
 
   createIngredient(ingredients: BaseIngredient | BaseIngredient[]) {
     return axios.post(`${this.ingredient_url}`, ingredients);
+  }
+
+  authenticatedPost(url: string, payload: any) {
+    const access = StorageKit.getItem("@LOCAL_ACCESS")
+    return axios.post(url, payload, {
+      headers: { 'Authorization': `Bearer ${access}`}
+    });
+  }
+  authenicatedGet(url: string) {
+    const access = StorageKit.getItem("@LOCAL_ACCESS")
+    return axios.get(url, {
+      headers: { 'Authorization': `Bearer ${access}`}
+    });
+  }
+
+  authenicatedPut(url: string, payload: any) {
+    const access = StorageKit.getItem("@LOCAL_ACCESS")
+    return axios.put(url,payload, {
+      headers: { 'Authorization': `Bearer ${access}`}
+    });
+  }
+
+  authenticatedDelete(url: string) {
+    const access = StorageKit.getItem("@LOCAL_ACCESS")
+    return axios.delete(url, {
+      headers: { 'Authorization': `Bearer ${access}`}
+    });
   }
 }
 const apiKit = new ApiKit();

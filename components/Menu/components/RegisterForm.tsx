@@ -34,7 +34,6 @@ const RegisterForm = ({ setMode }: AuthFormProps) => {
     >
       {({ errors, touched }) => (
         <Form>
-            {console.log(errors)}
           <Label htmlFor="username" className="required">
             Email
           </Label>

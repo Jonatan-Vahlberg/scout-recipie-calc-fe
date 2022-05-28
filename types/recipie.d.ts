@@ -29,12 +29,12 @@ type BaseIngredient = {
   id: string;
 };
 
-type Ingredient = BaseIngredient & {
-  ingredient_id?: string;
+type Ingredient = {
   amount?: number;
   id: string;
   replaces?: string;
   replaces_reason?: Reason;
+  ingredient: BaseIngredient;
 };
 
 type RecipieStep = {

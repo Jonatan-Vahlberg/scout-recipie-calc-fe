@@ -58,7 +58,7 @@ const CartProvider: React.FC = ({children}) => {
   }
 
   const _stringifyIngredient = (ingredient:Ingredient, portions:number) => {
-    return `\t${getIngredientPortioned(ingredient, portions)} ${ingredient.unit || ""} ${ingredient.name}\n`
+    return `\t${getIngredientPortioned(ingredient, portions)} ${ingredient.ingredient.unit || ""} ${ingredient.ingredient.name}\n`
   }
 
   const _stringifyRecipie = (item: CartItem) => {
