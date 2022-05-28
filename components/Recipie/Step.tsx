@@ -11,7 +11,7 @@ const StepIndex = styled.div`
   width: 28px;
   height: 28px;
   border-radius: 14px;
-  background-color: ${({ theme }) => theme.colors.primary[200]};
+  background-color: ${({ theme }) => theme.colors.primary[100]};
   color: ${({ theme }) => theme.colors.white};
 
   display: flex;

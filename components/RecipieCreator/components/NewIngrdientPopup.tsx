@@ -36,7 +36,7 @@ const SmallLabel = styled(Label)`
 `;
 
 const Error = styled.p`
-  color: ${({ theme }) => theme.colors.primary[600]};
+  color: ${({ theme }) => theme.colors.primary[500]};
 `;
 
 const defaultIngredient: BaseIngredient = {

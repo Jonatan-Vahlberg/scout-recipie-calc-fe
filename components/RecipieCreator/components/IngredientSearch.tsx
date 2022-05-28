@@ -16,7 +16,7 @@ type IngredientSearchProps = {
 const ListWrapper = styled.div`
     width: 100%;
     height: 175px;
-    background-color: #fff;
+    background-color: ${({ theme }) => theme.colors.white};
     padding: 8px 8px;
     overdlow: auto;
     overflow-x: hidden;

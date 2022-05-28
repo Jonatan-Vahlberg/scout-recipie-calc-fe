@@ -7,7 +7,7 @@ const Wrapper = styled.div<{
 }>`
   padding: 16px;
   background: ${({ theme, offColor }) =>
-    offColor ? theme.colors.gray["100"] : theme.colors.white};
+    offColor ? theme.colors.gray[300] : theme.colors.white};
   corner-radius: ${({ rounded }) => (rounded ? "3px" : "0px")};
 `;
 

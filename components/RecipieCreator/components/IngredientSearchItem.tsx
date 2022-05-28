@@ -7,7 +7,7 @@ const Wrapper = styled.div<{ selected: boolean }>`
   justify-content: space-between;
   cursor: pointer;
   background-color: ${({ theme, selected }) =>
-    selected ? theme.colors.gray[100] : "#fff"};
+    selected ? theme.colors.gray[100] : theme.colors.white};
   padding: 4px 8px;
   &:hover {
     background-color: ${({ theme }) => theme.colors.gray[100]};

@@ -21,10 +21,10 @@ justify-content: center;
   height: 24px;
   font-size: 11px;
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.primary[200]};
+  background-color: ${({ theme }) => theme.colors.primary[300]};
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: ${({ theme }) => theme.colors.white};
 }
 `;

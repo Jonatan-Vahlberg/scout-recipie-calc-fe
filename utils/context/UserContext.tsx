@@ -3,7 +3,6 @@ import StorageKit from "../StorageKit";
 import userKit from "../UserKit";
 
 type UserContextType = {
-  cart?: UserCart;
   token?: Token;
   user?: any;
   hasFetched?: boolean;
@@ -43,8 +42,7 @@ const UserProvider = ({ children }) => {
   }
   const [hasFetched, setHasFetched] = useState(false)
   const [user, setUser] = useState<User>()
-  const [token, setToken] = useState(getToken());
-  const [userCart, setUserCart] = useState<UserCart>()
+  const [token, setToken] = useState(getToken())
   const setLocalToken = (token: any) => {
     setToken(token)
     StorageKit.setItem("@LOCAL_ACCESS", token.access)
@@ -55,6 +53,7 @@ const UserProvider = ({ children }) => {
     setToken(undefined)
     StorageKit.removeItem("@LOCAL_ACCESS")
     StorageKit.removeItem("@LOCAL_REFRESH")
+    setUser(undefined)
   }
 
   const refresh = () => {
@@ -113,7 +112,6 @@ const UserProvider = ({ children }) => {
       value={{
         token,
         user,
-        cart: userCart,
         hasFetched,
         actions: {
           login: (payload, onLogin = () => {}, onError = () => {}) => {

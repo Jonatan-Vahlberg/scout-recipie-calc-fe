@@ -3,7 +3,7 @@ import { useDrawer } from "../../utils/context/DrawerContext";
 import { Header } from "../Styled/Text";
 
 const CloseIcon = styled.i.attrs({ className: "fa fa-times" })`
-color: ${({ theme }) => theme.colors.primary[600]};
+color: ${({ theme }) => theme.colors.primary[500]};
 position: absolute;
 right: 16px;
 top: 25px;

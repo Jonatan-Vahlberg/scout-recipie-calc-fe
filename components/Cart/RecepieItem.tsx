@@ -13,10 +13,10 @@ const DeletionIcon = styled.i`
   font-size: 18px;
   cursor: pointer;
   padding: 4px;
-  color: ${({ theme }) => theme.colors.primary[600]};
+  color: ${({ theme }) => theme.colors.primary[500]};
   transition: all 0.3s;
   &: hover {
-    color: ${({ theme }) => theme.colors.primary[200]};
+    color: ${({ theme }) => theme.colors.primary[100]};
   }
 `;
 

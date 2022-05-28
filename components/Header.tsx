@@ -15,7 +15,7 @@ const HeaderBar = styled.div`
 `;
 
 export const Header = styled(Text)`
-  color: ${({ theme }) => theme.colors.gray["900"]};
+  color: ${({ theme }) => theme.colors.primary[500]};
   font-weight: 900;
   font-size: 40px;
   line-height: 38px;
@@ -29,7 +29,7 @@ export const HeaderWrapper = styled.div`
 
   &:hover {
     & p {
-      color: ${({ theme }) => theme.colors.primary[200]};
+      color: ${({ theme }) => theme.colors.primary[300]};
     }
   }
 `;

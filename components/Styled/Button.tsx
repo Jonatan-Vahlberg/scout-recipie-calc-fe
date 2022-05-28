@@ -1,12 +1,12 @@
 import styled, { css } from "styled-components";
 
 export const ColorPrimary = css`
-  background-color: ${({ theme }) => theme.colors.primary[200]};
+  background-color: ${({ theme }) => theme.colors.primary[300]};
   color: ${({ theme }) => theme.colors.white};
   transition: all 0.3s;
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.primary[300]};
+    background-color: ${({ theme }) => theme.colors.primary[500]};
   }
 
   &:disabled {
@@ -23,14 +23,14 @@ export const ColorGray = css`
   color: ${({ theme }) => theme.colors.gray[900]};
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.gray[400]};
+    background-color: ${({ theme }) => theme.colors.gray[500]};
   }
 
   &:disabled {
-    background-color: ${({ theme }) => theme.colors.gray[200]};
+    background-color: ${({ theme }) => theme.colors.gray[300]};
     cursor: not-allowed;
     &:hover {
-      background-color: ${({ theme }) => theme.colors.gray[200]};
+      background-color: ${({ theme }) => theme.colors.gray[300]};
     }
   }
 `;

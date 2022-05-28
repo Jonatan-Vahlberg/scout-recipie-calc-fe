@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  background: #fff;
+  background: ${({ theme }) => theme.colors.white};
   padding: 4px 8px;
 `;
 
@@ -27,7 +27,7 @@ const RightSide = styled.div`
 `;
 
 const Icon = styled(MdCancel)`
-  color: ${({ theme }) => theme.colors.primary[600]};
+  color: ${({ theme }) => theme.colors.primary[500]};
   align-self: center;
   justify-self: center;
   font-size: 24px;

@@ -15,7 +15,7 @@ export const StyledField = styled(Field)`
 
 export const StyledError = styled.p<{ touched?: boolean }>`
   display: ${({ touched}) =>  touched ? "block" : "none"};
-  color: ${({theme}) => theme.colors.primary["600"]}
+  color: ${({theme}) => theme.colors.error}
 `
 
 export const FormButton = styled.button<{ cancel?: boolean }>`
@@ -39,7 +39,7 @@ export const TertiaryFormButton = styled.button`
   margin-top: 16px;
   transition: all 0.3s;
   &:hover {
-    color: ${({theme}) => theme.colors.primary[600]};
+    color: ${({theme}) => theme.colors.primary[500]};
   }
 `
 
@@ -54,6 +54,6 @@ export const Label = styled.label`
   &.required:after {
     content: "*";
     font-size: 16px;
-    color: ${({ theme }) => theme.colors.primary[600]};
+    color: ${({ theme }) => theme.colors.primary[500]};
   }
 `;

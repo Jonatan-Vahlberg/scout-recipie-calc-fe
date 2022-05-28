@@ -15,14 +15,14 @@ const Menu = () => {
   
   return (
     <>
-      {!user.token?.access && (
+      {!user.user && (
         <HeaderButton onClick={setDrawer}>
-          <i className="fas fa-sign-in"></i>
+          <i className="fas fa-user-alt"></i>
         </HeaderButton>
       )}
-      {user.token?.access && (
+      {user.user && (
         <HeaderButton onClick={user.actions.logout}>
-          <i className="fas fa-sign-out"></i>
+          <i className="fas fa-door-closed"></i>
         </HeaderButton>
       )}
     </>

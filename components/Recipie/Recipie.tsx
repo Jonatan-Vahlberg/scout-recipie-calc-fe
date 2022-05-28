@@ -69,18 +69,18 @@ const ContentWrapper = styled.div`
 `;
 
 const Anchor = styled.a`
-  color: ${({ theme }) => theme.colors.primary[200]};
+  color: ${({ theme }) => theme.colors.primary[300]};
   font-size: 18px;
   line-height: 21px;
   &:link,
   &:visited {
-    color: ${({ theme }) => theme.colors.primary[200]};
+    color: ${({ theme }) => theme.colors.primary[300]};
     &:hover {
-      color: ${({ theme }) => theme.colors.primary[300]};
+      color: ${({ theme }) => theme.colors.primary[500]};
     }
   }
   &:hover {
-    color: ${({ theme }) => theme.colors.primary[300]};
+    color: ${({ theme }) => theme.colors.primary[500]};
   }
 `;
 
