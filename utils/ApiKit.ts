@@ -44,14 +44,14 @@ class ApiKit {
       headers: { 'Authorization': `Bearer ${access}`}
     });
   }
-  authenicatedGet(url: string) {
+  authenticatedGet(url: string) {
     const access = StorageKit.getItem("@LOCAL_ACCESS")
     return axios.get(url, {
       headers: { 'Authorization': `Bearer ${access}`}
     });
   }
 
-  authenicatedPut(url: string, payload: any) {
+  authenticatedPut(url: string, payload: any) {
     const access = StorageKit.getItem("@LOCAL_ACCESS")
     return axios.put(url,payload, {
       headers: { 'Authorization': `Bearer ${access}`}

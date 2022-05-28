@@ -23,7 +23,19 @@ class UserKit {
   }
 
   getUser() {
-    return apiKit.authenicatedGet(`${this.base_url}`)
+    return apiKit.authenticatedGet(`${this.base_url}`)
+  }
+
+  getUserCart() {
+    return apiKit.authenticatedGet(`${this.base_url}cart/`)
+  }
+
+  createUserCart(payload: BaseUserCart) {
+    return apiKit.authenticatedPost(`${process.env.NEXT_PUBLIC_API_BASE}api/v1/cart/`, payload)
+  }
+
+  updateUserCart(cartId: string, payload: any) {
+    return apiKit.authenticatedPut(`${this.base_url}cart/${cartId}/`, payload)
   }
 }
 const userKit = new UserKit();

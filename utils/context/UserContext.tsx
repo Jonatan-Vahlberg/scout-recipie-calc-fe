@@ -6,6 +6,7 @@ type UserContextType = {
   cart?: UserCart;
   token?: Token;
   user?: any;
+  hasFetched?: boolean;
   actions: {
     login: (payload: any, onLogin: VoidFunction, onError: VoidFunction) => void;
     register: (
@@ -40,9 +41,10 @@ const UserProvider = ({ children }) => {
       }
     return undefined
   }
-
+  const [hasFetched, setHasFetched] = useState(false)
+  const [user, setUser] = useState<User>()
   const [token, setToken] = useState(getToken());
-
+  const [userCart, setUserCart] = useState<UserCart>()
   const setLocalToken = (token: any) => {
     setToken(token)
     StorageKit.setItem("@LOCAL_ACCESS", token.access)
@@ -74,10 +76,12 @@ const UserProvider = ({ children }) => {
   const getUser = () => {
     userKit.getUser()
     .then((response) => {
-      console.log(response)
+      (response)
+      setUser(response.data);
     })
     .catch(error => {
       console.warn("ERROR: unable to retrieve user", error)
+      setHasFetched(true)
     })
   }
   
@@ -89,6 +93,10 @@ const UserProvider = ({ children }) => {
       access: storedAccess,
       refresh: storedRefresh   
       })
+    }
+    else {
+      logout()
+      setHasFetched(true)
     }
   },[])
 
@@ -104,6 +112,9 @@ const UserProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         token,
+        user,
+        cart: userCart,
+        hasFetched,
         actions: {
           login: (payload, onLogin = () => {}, onError = () => {}) => {
             userKit

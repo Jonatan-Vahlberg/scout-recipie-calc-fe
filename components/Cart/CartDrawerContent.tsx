@@ -29,7 +29,7 @@ const CartDrawerContent = () => {
         <DropdownWrapper title="Recept" defaultState={false}>
           <RecipieList>
             {cart.cart.map((item) => (
-              <RecipieItem key={`CART_RECIPIE_I${item.alias}`} item={item} />
+              <RecipieItem key={`CART_RECIPIE_${item?.id || item.alias}`} item={item} />
             ))}
           </RecipieList>
         </DropdownWrapper>

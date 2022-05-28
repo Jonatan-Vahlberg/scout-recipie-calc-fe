@@ -1,7 +1,7 @@
 
 
 
-export type StorageKey = "@LOCAL_CART" | "@LOCAL_ACCESS" | "@LOCAL_REFRESH" | "@LOCAL_PORTIONS";
+export type StorageKey = "@LOCAL_CART" | "@LOCAL_CART_UPDATED_AT" | "@LOCAL_ACCESS" | "@LOCAL_REFRESH" | "@LOCAL_PORTIONS";
 
 
 class StorageKit {
