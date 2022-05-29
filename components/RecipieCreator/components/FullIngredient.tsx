@@ -53,12 +53,12 @@ const FullIngredient: React.FC<FullIngredientProps> = ({
   return (
     <Wrapper>
       <LeftSide>
-        <strong>{ingredient.name}</strong>&nbsp;{ingredient.amount}
-        {ingredient.unit}
+        <strong>{ingredient.ingredient.name}</strong>&nbsp;{ingredient.amount}
+        {ingredient.ingredient.unit}
         <div>
           <MarkingsWrapper>
-            {ingredient.category && (
-              <CategoryIndicator small category={ingredient.category} />
+            {ingredient.ingredient.category && (
+              <CategoryIndicator small category={ingredient.ingredient.category} />
             )}
             {ingredient.replaces_reason && (
               <ReplacementIndicator small reason={ingredient.replaces_reason} />

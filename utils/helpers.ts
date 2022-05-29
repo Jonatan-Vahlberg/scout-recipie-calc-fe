@@ -89,22 +89,15 @@ export const translatedReasons = {
 export const getIngredientPortioned = (
   ingredient: Ingredient,
   portions: number
-) => {
-  if (!ingredient.amount) return "";
+): number => {
+  if (!ingredient.amount) return 0;
   let amount = ingredient.amount / 4;
   amount = amount * portions;
 
   if(amount < 1){
-    return amount.toFixed(2)
+    return Number(amount.toFixed(2))
   }
   return Math.round(amount)
-  if (ingredient.ingredient.unit === "st") return Math.ceil(amount);
-  if (amount > 1000) return Math.round(amount / 100) * 100;
-  if (amount > 500) return Math.round(amount / 50) * 50;
-  if (amount > 50) return Math.round(amount / 10) * 10;
-  if (amount < 10 && ingredient.ingredient.category === "SPICE")
-    return (Math.round(amount * 10) / 10).toFixed(1);
-  return amount;
 };
 
 const baseSizes = {

@@ -101,7 +101,7 @@ const RecipieModal: React.FC<ModalProps> = ({ isOpen, toggle }) => {
                     <IngredientWrapper>
                       {ingredients.map((ingredient, index) => (
                         <FullIngredient
-                        key={`FULL_INGREDIENT_${ingredient.ingredient.id}${index}`}
+                        key={`FULL_INGREDIENT_${ingredient.ingredient?.id}${index}`}
                           ingredient={ingredient}
                           removeIngredient={() => {
                             setIngredients((state) => {

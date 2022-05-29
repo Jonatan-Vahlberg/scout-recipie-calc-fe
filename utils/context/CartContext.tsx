@@ -29,6 +29,7 @@ type ContextInterface = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   groupByRecipie: () => CartItem[][];
   copyCart: () => void;
+  copyIngredients: (orderBy?: OrderBy) => void;
 };
 
 const CartContext = createContext<Partial<ContextInterface>>({});
@@ -160,7 +161,7 @@ const CartProvider: React.FC = ({ children }) => {
     userKit
       .updateUserCart(cloudCart.id, {
         items: [...cloudCart.items, item],
-        user: user.user?.id
+        user: user.user?.id,
       })
       .then((res) => {
         setCloudCart(res.data);
@@ -255,22 +256,75 @@ const CartProvider: React.FC = ({ children }) => {
     }
   };
 
-  const copyAllIngredients = () => {
-    const copyPasta = _cart
-      .map((item) =>
-        item.recipie.ingredients
-          .map((ingredient) =>
-            _stringifyIngredient(ingredient, _getPortions(item.portions))
-          )
-          .join("")
-      )
-      .join("\n");
-    console.log(copyPasta);
-    // if(navigator){
-    //   navigator.clipboard.writeText(copyPasta)
-    // }
+  const getIngredientTotalPortions = (
+    ingredient: Ingredient,
+    ingredients: SplitIngredient[],
+    portions: Portions,
+    orderBy: OrderBy
+  ) => {
+    if (!ingredients.find((i) => i.ingredient === ingredient.ingredient.id)) {
+      const amount = getIngredientPortioned(ingredient, _getPortions(portions));
+      ingredients.push({
+        ingredient: ingredient.ingredient.id,
+        ingredients: [ingredient],
+        amount,
+        name: ingredient.ingredient.name,
+        unit: ingredient.ingredient.unit,
+        category: ingredient.ingredient.category,
+      });
+    } else {
+      const _ingredient = ingredients.find(
+        (i) => i.ingredient === ingredient.ingredient.id
+      );
+      _ingredient.ingredients.push(ingredient);
+      _ingredient.amount += getIngredientPortioned(
+        ingredient,
+        _getPortions(portions)
+      );
+    }
+    if(orderBy === "CATEGORY"){
+      ingredients.sort((a, b) => a.category?.localeCompare(b?.category));
+    }
+    else if( orderBy === "NAME"){
+      ingredients.sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    return ingredients;
   };
-  copyAllIngredients();
+
+  const getIngredientCopyPasta = (ingredients: SplitIngredient[]) => {
+    return ingredients
+      .map((i) => {
+        let ingredient = ""
+        if(i.amount){
+          ingredient = `${i.amount}`
+        }
+        if(i.unit){
+          ingredient += ` ${i.unit}`
+        }
+        ingredient += ` ${i.name}`
+        return ingredient
+      })
+      .join("\n");
+  }
+
+  const copyIngredients = (orderBy?: OrderBy) => {
+    let ingredientSplitUp: SplitIngredient[] = [];
+    _cart.forEach((item) => {
+      item.recipie.ingredients.map((ingredient) => {
+        ingredientSplitUp = getIngredientTotalPortions(
+          ingredient,
+          ingredientSplitUp,
+          item.portions,
+          orderBy,
+        );
+      });
+    });
+    const copyPasta = getIngredientCopyPasta(ingredientSplitUp);
+    if(navigator){
+      navigator.clipboard.writeText(copyPasta)
+    }
+  };
   console.log();
   return (
     <CartContext.Provider
@@ -284,6 +338,7 @@ const CartProvider: React.FC = ({ children }) => {
         generateAlias,
         groupByRecipie,
         copyCart,
+        copyIngredients ,
       }}
     >
       {children}

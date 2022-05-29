@@ -63,3 +63,15 @@ type ListOptions = {
   page: number;
   search?: string;
 };
+
+
+type SplitIngredient = {
+    ingredient: string;
+    ingredients: Ingredient[];
+    amount?: number;
+    name: string;
+    unit?: UnitSignifier;
+    category?: Category;
+}
+
+type OrderBy = "NAME" | "CATEGORY";;
