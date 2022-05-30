@@ -51,7 +51,7 @@ const NavHeader: React.FC = () => {
       <HeaderBar>
         <Wrapper href="/">
           <HeaderWrapper className="d-flex align-items-center cursor-pointer">
-            <Image src="/scout.png" alt="header-image" width={48} height={48} />
+            <Image src="/image/scout.png" alt="header-image" width={48} height={48} />
             <Header>Scoutrecpt kalkylator</Header>
           </HeaderWrapper>
         </Wrapper>

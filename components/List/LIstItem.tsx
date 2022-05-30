@@ -39,7 +39,7 @@ const ListItem: React.FC<ListItemProps> = ({recipie}) => {
 
       <ListItemWrapper>
         {recipie.image_link && <img src={recipie.image_link} />}
-        {!recipie.image_link && <Fallback src='/no_img.png' />}
+        {!recipie.image_link && <Fallback src='/image/no_img.png' />}
         <Text>
           <strong>{recipie.name}</strong>
         </Text>

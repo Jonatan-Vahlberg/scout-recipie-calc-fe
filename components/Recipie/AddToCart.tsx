@@ -25,7 +25,7 @@ const AddToCartButton: React.FC<{ recipie?: Recipie }> = ({ recipie }) => {
         setState("DONE");
         setTimeout(() => {
           setState("NONE");
-        }, 2500);
+        }, 2000);
       },
       () => {
         setState("NONE");
