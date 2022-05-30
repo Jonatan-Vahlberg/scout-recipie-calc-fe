@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import Recipie from "../components/Recipie/Recipie";
@@ -7,26 +8,22 @@ import { useRecipie } from "../utils/context/RecipieContext";
 
 const DetailPage: NextPage = () => {
   const router = useRouter();
-  const recipieContext = useRecipie();
+  const recipie = useRecipie();
   useEffect(() => {
     
     if (router.query.id) {
       const id = Number(router.query.id.toString());
-      apiKit
-        .getRecipie(id)
-        .then((response) => {
-          recipieContext.setRecipie(response.data);
-        })
-        .catch((error) => {
-          console.warn(`ERROR: GETTING RECIPIE ${error}`);
-        });
+      recipie.getRecipie(id);
     }
   }, [router.query.id]);
 
   return (
-    <div>
+    <>
+      <Head>
+        <title>Scoutrecpt kalkylator</title>
+      </Head>
       <Recipie />
-    </div>
+    </>
   );
 };
 

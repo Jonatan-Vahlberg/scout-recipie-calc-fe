@@ -1,7 +1,7 @@
 import { Modal } from "reactstrap";
 import Card from "../Card";
-import { Header, SubHeader } from "../Styled/Text";
-import { Formik, Form, Field } from "formik";
+import { SubHeader } from "../Styled/Text";
+import { Formik, Form } from "formik";
 import styled, { css } from "styled-components";
 import DropdownWrapper from "../Dropdown/DropdownWrapper";
 import { Button } from "../PortionSelector/PortionIncrementer";
@@ -10,6 +10,7 @@ import { FormButton, Label, StyledField } from "../Styled/Form";
 import { useList } from "../../utils/context/ListContext";
 import NewIngrdientPopup from "./components/NewIngrdientPopup";
 import FullIngredient from "./components/FullIngredient";
+import RecipieModalContent from "./components/RecipieModalContent";
 
 type ModalProps = {
   isOpen: boolean;
@@ -36,9 +37,7 @@ const RecipieModal: React.FC<ModalProps> = ({ isOpen, toggle }) => {
   const [posting, setPosting] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
 
-  const isAllIngredientsValid = () => {
-    return ingredients.every((ingredient) => ingredient.ingredient.name !== "");
-  };
+
 
   const onToggle = () => {
     toggle();
@@ -68,82 +67,21 @@ const RecipieModal: React.FC<ModalProps> = ({ isOpen, toggle }) => {
     <Modal isOpen={isOpen} toggle={onToggle} centered backdrop="static">
       <Card>
         <div className="position-relative">
-          <Header>Nytt recept</Header>
-          <Formik
+        <SubHeader>Skapa recept</SubHeader>
+          <RecipieModalContent
+            onSubmit={onSubmit}
             initialValues={{
               name: "",
               link: "",
               imageLink: "",
-              description: "",
             }}
-            onSubmit={onSubmit}
-          >
-            {() => (
-              <Form>
-                <fieldset disabled={posting}></fieldset>
-                <Card className="mb-3" offColor>
-                  <Label htmlFor="name" className="required">
-                    Titel
-                  </Label>
-                  <StyledField name="name" placeholder="Recpt Titel" />
-
-                  <Label htmlFor="link">Länk till orginal recept</Label>
-                  <StyledField name="link" placeholder="Länk till recept" />
-
-                  <Label htmlFor="imageLink">Bildlänk</Label>
-                  <StyledField name="imageLink" placeholder="Bildlänk" />
-                </Card>
-                <Card offColor>
-                  <DropdownWrapper
-                    title="Ingredienser (Baserat på 4 portioner)"
-                    defaultState={true}
-                  >
-                    <IngredientWrapper>
-                      {ingredients.map((ingredient, index) => (
-                        <FullIngredient
-                        key={`FULL_INGREDIENT_${ingredient.ingredient?.id}${index}`}
-                          ingredient={ingredient}
-                          removeIngredient={() => {
-                            setIngredients((state) => {
-                              let newState = [...state];
-                              newState.splice(index, 1);
-                              return newState;
-                            });
-                          }}
-                        />
-                      ))}
-                    </IngredientWrapper>
-                  </DropdownWrapper>
-                  <FormButton
-                    type="button"
-                    onClick={() => setPopupVisible(true)}
-                  >
-                    Lägg till ingrediens
-                  </FormButton>
-                </Card>
-                <ActionBar>
-                  <FormButton
-                    disabled={posting}
-                    cancel
-                    type="reset"
-                    onClick={onToggle}
-                  >
-                    Avbryt
-                  </FormButton>
-                  <FormButton
-                    disabled={
-                      posting ||
-                      ingredients.length === 0 ||
-                      !isAllIngredientsValid()
-                    }
-                    type="submit"
-                  >
-                    Skapa
-                  </FormButton>
-                </ActionBar>
-              </Form>
-            )}
-          </Formik>
+            posting={posting}
+            ingredients={ingredients}
+            setIngredients={setIngredients}
+            onToggle={onToggle}
+            setPopupVisible={setPopupVisible}
+            submitText="Uppdatera"
+          />
           <NewIngrdientPopup
             addedIngredients={ingredients}
             addIngredient={(ingredient) => {

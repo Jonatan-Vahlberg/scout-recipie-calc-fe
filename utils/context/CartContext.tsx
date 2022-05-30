@@ -65,7 +65,7 @@ const CartProvider: React.FC = ({ children }) => {
   }, [_cart, checkedStorage]);
 
   useEffect(() => {
-    console.log(cartMode);
+    
     if (!checkedStorage) {
       _checkStorage();
       return;
@@ -73,7 +73,7 @@ const CartProvider: React.FC = ({ children }) => {
   }, [cartMode]);
 
   useEffect(() => {
-    console.log(cloudCart);
+    
   }, [cloudCart]);
 
   useEffect(() => {
@@ -336,7 +336,7 @@ const CartProvider: React.FC = ({ children }) => {
       navigator.clipboard.writeText(copyPasta)
     }
   };
-  console.log();
+  
   return (
     <CartContext.Provider
       value={{

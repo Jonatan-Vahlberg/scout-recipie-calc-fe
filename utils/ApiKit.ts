@@ -23,7 +23,11 @@ class ApiKit {
   }
 
   createRecipie(recipie: FormRecipie) {
-    return axios.post(`${this.recipie_url}`, recipie);
+    return this.authenticatedPost(`${this.recipie_url}`, recipie);
+  }
+
+  updateRecipie(recipie: FormRecipie, id: any) {
+    return this.authenticatedPut(`${this.recipie_url}${id}/`, recipie);
   }
 
   getIngredients(options?: ListOptions) {

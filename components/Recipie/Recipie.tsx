@@ -1,9 +1,10 @@
-import Image from "next/image";
 import styled from "styled-components";
 import { usePortions } from "../../utils/context/PortionContext";
 import { useRecipie } from "../../utils/context/RecipieContext";
+import { useUser } from "../../utils/context/UserContext";
 import Card from "../Card";
 import PortionSelector from "../PortionSelector/PortionSelector";
+import RecipeUpdatingModal from "../RecipieCreator/RecipieUpdatingModal";
 import { Header, SubHeader, Text } from "../Styled/Text";
 import AddToCartButton from "./AddToCart";
 import Ingredient from "./Ingredient";
@@ -92,19 +93,23 @@ const IngredientWrapper = styled.div`
 `;
 
 const Recipie = () => {
+  const user = useUser();
   const { recipie } = useRecipie();
   const portions = usePortions()
   if(!recipie) return null
   return (
     <Container withSteps={true}>
       <HeaderWrapper>
-        <Header className="mb-0">{recipie.name}</Header>
+        <Header className="mb-0">{recipie.name}
+          </Header>
+          {user.user && <RecipeUpdatingModal/>}
         <AddToCartButton recipie={recipie}/>
       </HeaderWrapper>
       <ImageWrapper>
         {recipie.image_link && (
           <img alt="Recipie image" src={recipie.image_link} />
         )}
+
       </ImageWrapper>
       <ContentWrapper>
         {recipie.link && (

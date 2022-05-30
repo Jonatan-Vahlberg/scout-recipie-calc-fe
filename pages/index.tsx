@@ -6,12 +6,13 @@ import ListView from "../components/List/ListView";
 const HomePage: NextPage<{}> = () => {
 
   return (
-    <div>
+    <>
       <Head>
         <meta name="description" content="Recept kalkylator för scout evenemang" />
+        <title>Scoutrecpt kalkylator</title>
       </Head>
       <ListView/>
-    </div>
+    </>
   );
 };
 
