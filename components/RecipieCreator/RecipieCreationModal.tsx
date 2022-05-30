@@ -80,7 +80,7 @@ const RecipieModal: React.FC<ModalProps> = ({ isOpen, toggle }) => {
             setIngredients={setIngredients}
             onToggle={onToggle}
             setPopupVisible={setPopupVisible}
-            submitText="Uppdatera"
+            submitText="Skapa"
           />
           <NewIngrdientPopup
             addedIngredients={ingredients}

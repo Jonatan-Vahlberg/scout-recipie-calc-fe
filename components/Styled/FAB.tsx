@@ -12,10 +12,10 @@ const FloatingActionButton = styled.button<{ css: FlattenSimpleInterpolation }>`
   height: 50px;
   border-radius: 50%;
   border: none;
-  background-color: ${({ theme }) => theme.colors.primary[100]};
+  background-color: ${({ theme }) => theme.colors.primary[300]};
   color: ${({ theme }) => theme.colors.white};
   &:hover {
-    background-color: ${({ theme }) => theme.colors.primary[300]};
+    background-color: ${({ theme }) => theme.colors.primary[500]};
   }
   right: 16px;
   bottom: 16px;
