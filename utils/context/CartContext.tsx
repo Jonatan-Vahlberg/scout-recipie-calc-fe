@@ -158,11 +158,22 @@ const CartProvider: React.FC = ({ children }) => {
     onError?: VoidFunction
   ) => {
     setUpdating(true);
-    userKit
-      .updateUserCart(cloudCart.id, {
-        items: [...cloudCart.items, item],
+    const payload = {
+        items: [ item],
         user: user.user?.id,
+    }
+    if(!cloudCart){
+      userKit.createUserCart(payload).then((res) => {
+        setCloudCart(res.data)
+        onSuccess && onSuccess();
+      }).catch((err) => {
+        onError && onError();
       })
+      .finally(() => setUpdating(false));
+    }
+    payload.items = [...cloudCart?.items, item];
+    userKit
+      .updateUserCart(cloudCart.id, payload)
       .then((res) => {
         setCloudCart(res.data);
         onSuccess && onSuccess();
