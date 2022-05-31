@@ -12,12 +12,13 @@ type IngredientProps = {
 const Ingredient: React.FC<IngredientProps> = (props) => {
   const { portions, ingredient } = props;
   const {name, category, unit} = ingredient.ingredient
-  
+  const ingredientPortion = getIngredientPortioned(ingredient, portions);
+  console.log("ingredientPortion", ingredientPortion)
   return (
     <Card className="d-flex justify-content-between align-items-center w-100">
       <Text className="mb-0">
         <strong>
-          {getIngredientPortioned(ingredient, portions)} {unit}
+          {ingredientPortion !== 0 && ingredientPortion} {ingredientPortion !== 0  && unit}
         </strong>{" "}
         {name}
       </Text>
