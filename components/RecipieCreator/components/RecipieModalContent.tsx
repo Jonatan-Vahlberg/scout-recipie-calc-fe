@@ -17,6 +17,7 @@ type ContentProps = {
   onToggle: VoidFunction;
   setPopupVisible: React.Dispatch<React.SetStateAction<boolean>>;
   submitText: string;
+  setSelectedIngredient: React.Dispatch<React.SetStateAction<Ingredient>>;
 };
 
 export const ActionBar = styled.div`
@@ -84,6 +85,10 @@ const RecipieModalContent = (props: ContentProps) => {
                           newState.splice(index, 1);
                           return newState;
                         });
+                      }}
+                      editIngredient={() => {
+                        props.setSelectedIngredient(ingredient);
+                        props.setPopupVisible(true);
                       }}
                     />
                   ))}

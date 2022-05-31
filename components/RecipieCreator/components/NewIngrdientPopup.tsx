@@ -56,14 +56,18 @@ type NewIngrdientPopupProps = {
   update?: false;
   addedIngredients: Ingredient[];
   addIngredient: (ingredient: Ingredient) => void;
+  updateIngredient: (ingredient: Ingredient) => void;
   dismiss: () => void;
+  savedIngredient?: Ingredient;
 };
 
 const NewIngrdientPopup: React.FC<NewIngrdientPopupProps> = ({
   addedIngredients,
   dismiss,
   addIngredient,
+  updateIngredient,
   visible,
+  savedIngredient,
 }) => {
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 300);
@@ -80,6 +84,18 @@ const NewIngrdientPopup: React.FC<NewIngrdientPopupProps> = ({
   const [error, setError] = useState("");
   const [mode, setMode] = useState<IngredientMode>("PREEXISTING");
   const [creating, setCreating] = useState(false);
+
+  useEffect(() => {
+    if(savedIngredient){
+      setSearch(savedIngredient.ingredient.name);
+      setSelectedIngredient(savedIngredient.ingredient);
+      setAmount(savedIngredient.amount);
+      setReplaces(savedIngredient.replaces);
+      setReplacesReason(savedIngredient.replaces_reason);
+      setMode("PREEXISTING");
+    }
+  },[savedIngredient])
+
   useEffect(() => {
     apiKit
       .getIngredients({
@@ -148,7 +164,7 @@ const NewIngrdientPopup: React.FC<NewIngrdientPopupProps> = ({
       return;
     }
     const _addIngredient = (ingredient: BaseIngredient) => {
-      addIngredient({
+      const _ingredient = {
         amount: amount || null,
         replaces: replaces ? replaces : null,
         replaces_reason: replacesReason,
@@ -160,7 +176,14 @@ const NewIngrdientPopup: React.FC<NewIngrdientPopupProps> = ({
             ingredient.category !== "-1" ? ingredient.category : undefined,
           id: ingredient.id,
         },
-      });
+      }
+      if(savedIngredient){
+        _ingredient.id = savedIngredient.id;
+        updateIngredient(_ingredient);
+        _dismiss();
+        return;
+      }
+      addIngredient(_ingredient);
       _dismiss();
     };
     if (mode === "NEW") {
@@ -284,7 +307,7 @@ const NewIngrdientPopup: React.FC<NewIngrdientPopupProps> = ({
               type="number"
               placeholder="#"
               className="w-25"
-              value={amount}
+              value={Number(amount).toString()}
               onChange={(e) => setAmount(Number(e.target.value))}
             />
 

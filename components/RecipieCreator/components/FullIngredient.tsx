@@ -1,5 +1,5 @@
 import { MdCancel } from "react-icons/md";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import CategoryIndicator from "../../Recipie/CategoryIndicator";
 import ReplacementIndicator from "../../Recipie/ReplacementIndicator";
 import { FormButton } from "../../Styled/Form";
@@ -26,13 +26,33 @@ const RightSide = styled.div`
   gap: 8px;
 `;
 
-const Icon = styled(MdCancel)`
-  color: ${({ theme }) => theme.colors.primary[500]};
-  align-self: center;
-  justify-self: center;
-  font-size: 24px;
-  cursor: pointer;
+const IconStyle = css`
+align-self: center;
+justify-self: center;
+font-size: 24px;
+cursor: pointer;
+
+ 
+
+`
+
+const EditIcon = styled.i`
+  ${IconStyle};
+  font-size: 18px;
+  color: ${({ theme }) => theme.colors.primary[300]};
+  &:hover {
+    color: ${({ theme }) => theme.colors.primary[500]};
+  }
 `;
+
+const DeletionIcon = styled.i`
+  ${IconStyle};
+
+  color: ${({ theme }) => theme.colors.error};
+  &:hover {
+    color: ${({ theme }) => theme.colors.error_dark};
+  }
+`
 
 const MarkingsWrapper = styled.div`
   display: flex;
@@ -43,18 +63,20 @@ const MarkingsWrapper = styled.div`
 type FullIngredientProps = {
   ingredient: Ingredient;
   removeIngredient: VoidFunction;
+  editIngredient: VoidFunction;
 };
 
 const FullIngredient: React.FC<FullIngredientProps> = ({
   ingredient,
   removeIngredient,
+  editIngredient,
 }) => {
   
   return (
     <Wrapper>
       <LeftSide>
         <strong>{ingredient.ingredient.name}</strong>&nbsp;{ingredient.amount}
-        {ingredient.ingredient.unit}
+        {ingredient.amount && ingredient.ingredient.unit}
         <div>
           <MarkingsWrapper>
             {ingredient.ingredient.category && (
@@ -68,7 +90,8 @@ const FullIngredient: React.FC<FullIngredientProps> = ({
       </LeftSide>
       <div>
         <RightSide>
-          <Icon onClick={removeIngredient}></Icon>
+          <EditIcon className="fas fa-pen" onClick={editIngredient}></EditIcon>
+          <DeletionIcon className="far fa-times" onClick={removeIngredient}></DeletionIcon>
         </RightSide>
       </div>
     </Wrapper>

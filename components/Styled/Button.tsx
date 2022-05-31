@@ -19,18 +19,22 @@ export const ColorPrimary = css`
 `;
 
 export const ColorGray = css`
-  background-color: ${({ theme }) => theme.colors.gray[300]};
-  color: ${({ theme }) => theme.colors.gray[900]};
+  background-color: ${({ theme }) => theme.colors.gray[500]};
+  color: ${({ theme }) => theme.colors.white};
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.gray[500]};
+    background-color: ${({ theme }) => theme.colors.gray[700]};
   }
 
   &:disabled {
-    background-color: ${({ theme }) => theme.colors.gray[300]};
+    background-color: ${({ theme }) => theme.colors.gray[100]};
     cursor: not-allowed;
+    color: ${({ theme }) => theme.colors.gray[900]};
+
     &:hover {
-      background-color: ${({ theme }) => theme.colors.gray[300]};
+      background-color: ${({ theme }) => theme.colors.gray[100]};
+      color: ${({ theme }) => theme.colors.gray[900]};
+
     }
   }
 `;

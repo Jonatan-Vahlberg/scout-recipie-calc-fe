@@ -36,6 +36,7 @@ const RecipieModal: React.FC<ModalProps> = ({ isOpen, toggle }) => {
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [posting, setPosting] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
+  const [selectedIngredient, setSelectedIngredient] = useState<Ingredient>()
 
 
 
@@ -81,14 +82,27 @@ const RecipieModal: React.FC<ModalProps> = ({ isOpen, toggle }) => {
             onToggle={onToggle}
             setPopupVisible={setPopupVisible}
             submitText="Skapa"
+            setSelectedIngredient={setSelectedIngredient}
           />
           <NewIngrdientPopup
             addedIngredients={ingredients}
             addIngredient={(ingredient) => {
               setIngredients((state) => [...state, ingredient]);
             }}
-            dismiss={() => setPopupVisible(false)}
+            updateIngredient={(ingredient) => {
+              setIngredients((state) =>{
+                const index = state.findIndex(i => i.id === ingredient.id);
+                if(index === -1) return state;
+                state.splice(index, 1, ingredient);
+                return [...state];
+              })
+            }}
+            dismiss={() => {
+              setPopupVisible(false);
+              setSelectedIngredient(undefined);
+            }}
             visible={popupVisible}
+            savedIngredient={selectedIngredient}
           />
         </div>
       </Card>

@@ -9,6 +9,7 @@ const Theme = {
       700: "#044270",
     },
     error: "#ba181b",
+    error_dark: "#6A0C0F",
     black: "#000000",
     gray: {
       900: "#161a1d",

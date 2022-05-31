@@ -25,6 +25,8 @@ const RecipeUpdatingModal = ({}) => {
     const [posting, setPosting] = useState(false);
     const [ingredients, setIngredients] = useState<Ingredient[]>(recipie?.recipie.ingredients);
     const [popupVisible, setPopupVisible] = useState(false);
+  const [selectedIngredient, setSelectedIngredient] = useState<Ingredient>()
+
 
     useEffect(() => {
         setIngredients(recipie?.recipie.ingredients);
@@ -59,7 +61,7 @@ const RecipeUpdatingModal = ({}) => {
         toggle();
         setIngredients([]);
       };
-
+      console.log(ingredients)
     return (
         <>
         <EditPen role="button" className="fas fa-pen " onClick={toggle}></EditPen>
@@ -80,6 +82,7 @@ const RecipeUpdatingModal = ({}) => {
             onToggle={onToggle}
             setPopupVisible={setPopupVisible}
             submitText="Uppdatera"
+            setSelectedIngredient={setSelectedIngredient}
 
           />
           <NewIngrdientPopup
@@ -87,8 +90,21 @@ const RecipeUpdatingModal = ({}) => {
             addIngredient={(ingredient) => {
               setIngredients((state) => [...state, ingredient]);
             }}
-            dismiss={() => setPopupVisible(false)}
+            updateIngredient={(ingredient) => {
+              setIngredients((state) =>{
+                const index = state.findIndex(i => i.id === ingredient.id);
+                console.log(index, ingredient)
+                if(index === -1) return state;
+                state.splice(index, 1, ingredient);
+                return [...state];
+              })
+            }}
+            dismiss={() => {
+              setPopupVisible(false);
+              setSelectedIngredient(undefined);
+            }}
             visible={popupVisible}
+            savedIngredient={selectedIngredient}
           />
             </Card>
         </Modal>
